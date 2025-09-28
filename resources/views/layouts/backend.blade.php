@@ -1,96 +1,180 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Back Office ครัวแสนสุข</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+    <style>
+        * {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #e9e6de;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            height: 100vh;
+            background: linear-gradient(180deg, #6b2d1a, #a9442e);
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 240px;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar h3 {
+            padding: 20px;
+            margin: 0;
+            text-align: center;
+            font-weight: bold;
+            background: #5a2413;
+            border-bottom: 2px solid #a9442e;
+        }
+
+        .sidebar .list-group-item {
+            background: transparent;
+            color: #fff3e6;
+            border: none;
+            padding: 12px 20px;
+            transition: 0.3s;
+            font-size: 15px;
+        }
+
+        .sidebar .list-group-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+        }
+
+        .sidebar .active-link {
+            background: #ffb347 !important;
+            color: #3b1f1f !important;
+            font-weight: bold;
+            border-radius: 10px;
+        }
+
+        /* Main Content */
+        .content {
+            margin-left: 240px;
+            padding: 20px;
+        }
+
+        .hold {
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
+            background: #faf8f4;
+            font-weight: bold;
+            border: 2px double rgb(157, 149, 149);
+        }
+
+        .holdlog:hover {
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
+            background: #ee8a8a;
+        }
+
+        .holdlog:hover a {
+            background: transparent;
+        }
+
+        .holdlog a {
+            background: transparent;
+        }
+
+        .hold:hover {
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
+            background: #cecccc;
+            border: 2px double transparent;
+        }
+
+        footer {
+            margin-left: 240px;
+            background: #f5f0eb;
+            color: #3b1f1f;
+        }
+    </style>
     @yield('css_before')
 
-    <style>
-      * {
-        font-family: Arial, Helvetica, sans-serif;
-      }
-      body {
-        background-color: #f8f9fa;
-      }
-      .header-banner {
-        height: auto;
-          /* url("{{ asset('images/bg2.jpg') }}") center/cover no-repeat; */
-        color: #fff;
-        background: #484646;
-      }
-      .trans:hover{
-        background: linear-gradient(#4d4c4b, #72716e);
-      }
-    </style>
-  </head>
-  <body>
+</head>
 
-    <!-- Header -->
-    <div class="container-fluid p-0 mb-3">
-      <div class="header-banner">
-        <div class="d-flex justify-between">
-          <h4 class="pt-2 ms-3 me-auto col-md-7 justify-content-center align-content-center">
-              BackOffice
-          </h4>
-          <div class="trans pt-2 justify-between px-3">
-            <span class="justify-items-center align-items-center">
-              <i class="border rounded-5 me-1 p-2 mb-2 fa-solid fa-user"></i>  <!-- user -->
-              ph.chanidapha_st@tni.ac.th
-            </span>  
-          </div>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3>Back Office</h3>
+        <div class="list-group list-group-flush">
+            <a href="/" class="list-group-item"><i class="fa-solid fa-house me-2"></i> HOME</a>
+            <a href="/dashboard" class="list-group-item"><i class="fa-solid fa-chart-line me-2"></i> Dashboard</a>
+            @if (session('role') === 'admin')
+                <a href="/employee" class="list-group-item">
+                    <i class="fa-solid fa-user-tie me-2"></i> Employee
+                </a>
+            @endif
+            <a href="/member" class="list-group-item"><i class="fa-solid fa-users me-2"></i> Member</a>
+            <a href="/menu" class="list-group-item"><i class="fa-solid fa-utensils me-2"></i> Menu</a>
+            <a href="/promotion" class="list-group-item"><i class="fa-solid fa-tags me-2"></i> Promotion</a>
         </div>
-        
-      </div>
     </div>
 
-    @yield('header')
+    <!-- Main Content -->
+    <div class="content">
+        <!-- Top-right User Dropdown -->
+        <div class="d-flex justify-content-end mb-3">
+            <div class="dropdown">
+                <a class="hold d-flex align-items-center rounded px-3 py-2 shadow-sm text-decoration-none dropdown-toggle"
+                    href="#" role="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="{{ asset('storage/' . session('emp_pic')) }}" alt="Profile" class="rounded-circle me-2"
+                        style="width:35px; height:35px; object-fit:cover;">
+                    <span>{{ session('emp_name') }}</span>
+                </a>
 
-    <!-- Layout -->
-    <div class="mx-4">
-      <div class="row">
-        
-        <!-- Sidebar -->
-        <div class="col-md-3 mb-4">
-          <div class="card shadow-sm rounded">
-            <div class="list-group list-group-flush">
-              <a href="/" class="fw-bold list-group-item list-group-item-action active" aria-current="true">
-                 HOME
-              </a>
-              <a href="/dashboard" class="list-group-item list-group-item-action">📊 Dashboard</a>
-              <a href="/employee" class="list-group-item list-group-item-action">🕵️‍♂️ Employee</a>
-              <a href="/member" class="list-group-item list-group-item-action">👨‍💻 Member</a>
-              <a href="/menu" class="list-group-item list-group-item-action">🍽️ Menu</a>
-              <a href="/promotion" class="list-group-item list-group-item-action">🏷️ Promotion</a>
+                <ul class="holdlog dropdown-menu dropdown-menu-start w-100" aria-labelledby="profileDropdown">
+                    <li>
+                        <a class="dropdown-item" href="#"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Logout
+                        </a>
+                    </li>
+                </ul>
             </div>
-          </div>
-          @yield('sidebarMenu')
+
+            <!-- Hidden Logout Form -->
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
+                @csrf
+            </form>
         </div>
 
-        <!-- Main Content -->
-        <div class="col-md-9">
-          <div class="card shadow-sm rounded p-3">
-            @yield('content')
-          </div>
-        </div>
-      </div>
+
+        @yield('content')
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+    </script>
+
 
     <!-- Footer -->
-    <footer class="mt-5 bg-light py-3 shadow-sm">
-      <p class="text-center mb-0">© 2025 by Chanidapha & Weerawat</p>
+    <footer class="pt-3 pb-2 shadow-lg text-center">
+        <p>© 2025 by Chanidapha & Weerawat</p>
     </footer>
-    
     @yield('footer')
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let links = document.querySelectorAll(".list-group-item");
+            links.forEach(link => {
+                if (link.href === window.location.href) {
+                    link.classList.add("active-link");
+                }
+            });
+        });
+    </script>
     @yield('js_before')
 
-    {{-- SweetAlert --}}
     @include('sweetalert::alert')
+</body>
 
-  </body>
 </html>

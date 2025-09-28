@@ -35,7 +35,7 @@
     <div class="card shadow-sm">
         <div class="card-body table-responsive">
             <table class="table table-hover align-middle">
-                <thead class="table-info text-center">
+                <thead class="table-primary text-center">
                     <tr>
                         <th>No.</th>
                         <th>Pic</th>
@@ -90,7 +90,7 @@
 
             <!-- Pagination -->
             <div class="mt-3">
-                {{ $members->links() }}
+                {{ $members->appends(request()->query())->links() }}
             </div>
         </div>
     </div>

@@ -6,11 +6,26 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\AuthController;
 
 use App\Http\Controllers\DashboardController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 //home page
 Route::get('/', [HomeController::class,'index']);
+
+//authentication
+Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+//ทำไมต้องมี name('login') ?
+//เวลาใช้ auth middleware ถ้า user ยังไม่ login → Laravel จะ redirect ไปหา route ที่ชื่อว่า login โดยอัตโนมัติ
+//ถ้าไม่เจอ → มันก็โยน error Route [login] not defined.
+ 
+//login เสร็จไปหน้า Dashboard
+Route::middleware('auth:admin')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
 
 //employee crud
 Route::get('/employee/searchfilter', [EmployeeController::class, 'searchfilter']);

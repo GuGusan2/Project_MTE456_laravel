@@ -9,10 +9,25 @@ use Illuminate\Support\Facades\Storage; //สำหรับเก็บไฟ�
 use Illuminate\Pagination\Paginator; //แบ่งหน้า
 use App\Models\MemberModel; //model
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 
 class MemberController extends Controller
 {
+    public function __construct()
+    {
+        // ใช้ middleware 'auth:admin' เพื่อบังคับให้ต้องล็อกอินในฐานะ admin ก่อนใช้งาน controller นี้
+        // ถ้าไม่ล็อกอินหรือไม่ได้ใช้ guard 'admin' จะถูก redirect ไปหน้า login
+        $this->middleware('auth:admin');
+
+        // เช็คว่าเป็น admin หรือ staff
+        $this->middleware(function ($request, $next) {
+            if (!in_array(session('role'), ['admin', 'staff'])) {
+                return redirect('/login');
+            }
+            return $next($request);
+        });
+    }
 
     public function index()
     {
@@ -121,7 +136,7 @@ class MemberController extends Controller
                 $mem_gender = $members->mem_gender;
                 $mem_phone = $members->mem_phone;
                 $mem_pic = $members->mem_pic;
-                return view('members.edit', compact('mem_id', 'mem_name', 'mem_username', 'mem_email','mem_dob','mem_gender','mem_phone','mem_pic'));
+                return view('members.edit', compact('mem_id', 'mem_name', 'mem_username', 'mem_email', 'mem_dob', 'mem_gender', 'mem_phone', 'mem_pic'));
             }
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500); //สำหรับ debug
@@ -159,8 +174,17 @@ class MemberController extends Controller
 
         // ตรวจสอบข้อมูลจากฟอร์มด้วย Validator
         $validator = Validator::make($request->all(), [
-            'mem_username' => 'required|min:3|unique:tbl_member',
-            'mem_email' => 'required|email|min:3|unique:tbl_member',
+            'mem_username' => [
+                'required',
+                'min:3',
+                Rule::unique('tbl_member', 'mem_username')->ignore($mem_id, 'mem_id'), //ห้ามแก้ซ้ำ
+            ],
+            'mem_email' => [
+                'required',
+                'min:3',
+                'email',
+                Rule::unique('tbl_member', 'mem_email')->ignore($mem_id, 'mem_id'), //ห้ามแก้ซ้ำ
+            ],
             'mem_name' => 'required|min:3',
             'mem_gender' => 'required|in:male,female',
             'mem_dob' => 'required|date',
@@ -258,17 +282,17 @@ class MemberController extends Controller
         }
     } //func reset
 
-     public function resetPassword($mem_id, Request $request)
+    public function resetPassword($mem_id, Request $request)
     {
         //vali msg 
         $messages = [
             'password.required' => 'กรุณากรอกข้อมูล',
             'password.min' => 'กรอกข้อมูลขั้นต่ำ :min ตัว',
             'password.confirmed' => 'not match !!',
-            
+
             'password_confirmation.required' => 'กรุณากรอกข้อมูล',
             'password_confirmation.min' => 'at least 3 characters',
-            
+
         ];
 
         //rule
@@ -325,5 +349,4 @@ class MemberController extends Controller
         // ส่งตัวแปร emps และ keyword ไปที่หน้า view
         return view('backsearch.mem_index', compact('members', 'keyword'));
     }
-
 } //class

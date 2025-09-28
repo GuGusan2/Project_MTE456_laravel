@@ -10,9 +10,26 @@ use Illuminate\Pagination\Paginator; //แบ่งหน้า
 use App\Models\EmployeeModel; //model
 use Illuminate\Validation\Rule;
 
+use Illuminate\Support\Facades\Auth;
+
 
 class EmployeeController extends Controller
 {
+    public function __construct()
+    {
+        // ใช้ middleware 'auth:admin' เพื่อบังคับให้ต้องล็อกอินในฐานะ admin ก่อนใช้งาน controller นี้
+        // ถ้าไม่ล็อกอินหรือไม่ได้ใช้ guard 'admin' จะถูก redirect ไปหน้า login
+        $this->middleware('auth:admin');
+
+        // เช็คว่าเป็น admin จริงไหม ?
+        $this->middleware(function ($request, $next) {
+            if (session('role') !== 'admin') {
+                return redirect('/login');
+            }
+            return $next($request);
+        });
+    }
+
 
     public function index()
     {
@@ -130,7 +147,7 @@ class EmployeeController extends Controller
                 $date = $employees->date;
                 $emp_phone = $employees->emp_phone;
                 $emp_pic = $employees->emp_pic;
-                return view('employees.edit', compact('emp_id', 'emp_name', 'emp_username', 'emp_email','emp_dob','emp_gender','role','date','emp_phone','emp_pic'));
+                return view('employees.edit', compact('emp_id', 'emp_name', 'emp_username', 'emp_email', 'emp_dob', 'emp_gender', 'role', 'date', 'emp_phone', 'emp_pic'));
             }
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500); //สำหรับ debug
@@ -171,8 +188,17 @@ class EmployeeController extends Controller
 
         // ตรวจสอบข้อมูลจากฟอร์มด้วย Validator
         $validator = Validator::make($request->all(), [
-            'emp_username' => 'required|min:3|unique:tbl_emp_admin',
-            'emp_email' => 'required|email|min:3|unique:tbl_emp_admin',
+            'emp_username' => [
+                'required',
+                'min:3',
+                Rule::unique('tbl_emp_admin', 'emp_username')->ignore($emp_id, 'emp_id'), //ห้ามแก้ซ้ำ
+            ],
+            'emp_email' => [
+                'required',
+                'min:3',
+                'email',
+                Rule::unique('tbl_emp_admin', 'emp_email')->ignore($emp_id, 'emp_id'), //ห้ามแก้ซ้ำ
+            ],
             'emp_name' => 'required|min:3',
             'emp_gender' => 'required|in:male,female',
             'emp_dob' => 'required|date',
@@ -274,17 +300,17 @@ class EmployeeController extends Controller
         }
     } //func reset
 
-     public function resetPassword($emp_id, Request $request)
+    public function resetPassword($emp_id, Request $request)
     {
         //vali msg 
         $messages = [
             'password.required' => 'กรุณากรอกข้อมูล',
             'password.min' => 'กรอกข้อมูลขั้นต่ำ :min ตัว',
             'password.confirmed' => 'not match !!',
-            
+
             'password_confirmation.required' => 'กรุณากรอกข้อมูล',
             'password_confirmation.min' => 'at least 3 characters',
-            
+
         ];
 
         //rule
@@ -369,5 +395,4 @@ class EmployeeController extends Controller
         // ส่งตัวแปร emps และ keyword ไปที่หน้า view
         return view('backsearch.emp_index', compact('employees', 'keyword'));
     }
-
 } //class

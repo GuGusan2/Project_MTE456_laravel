@@ -20,7 +20,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col-md-7">
+            <div class="col-md-6">
                 <form action="/employee/searchEmployee" method="get" class="row" role="search">
                     <div class="col">
                         <input type="text" 

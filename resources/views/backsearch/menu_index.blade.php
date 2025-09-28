@@ -39,7 +39,7 @@
     <div class="card shadow-sm rounded-3">
         <div class="card-body p-0">
             <table class="table table-hover align-middle mb-0">
-                <thead class="table-info">
+                <thead class="table-primary">
                     <tr>
                         <th class="text-center" width="5%">#</th>
                         <th class="text-center" width="10%">Pic</th>

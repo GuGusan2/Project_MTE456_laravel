@@ -2,15 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class EmployeeModel extends Model
+class EmployeeModel extends Authenticatable
 {
-    protected $table = 'tbl_emp_admin';
-    protected $primaryKey = 'emp_id'; // ตั้งให้ตรงกับชื่อจริงใน DB
-    protected $fillable = ['emp_name', 'emp_username', 'emp_password', 'emp_gender', 'emp_email','emp_phone','emp_dob','role','date','timestamp','emp_pic'];
-    public $incrementing = true; // ถ้า primary key เป็นตัวเลข auto increment
-    public $timestamps = false; // ใส่บรรทัดนี้ถ้าไม่มี created_at, updated_at
+    protected $table = 'tbl_emp_admin'; // ชื่อตารางจริง
+    protected $primaryKey = 'emp_id';
+    public $timestamps = false; // ถ้าไม่มี created_at/updated_at
+
+    protected $fillable = [
+        'emp_username', 'emp_email', 'emp_name', 'emp_password', 'emp_phone',
+        'emp_dob', 'date', 'emp_gender', 'role', 'emp_pic'
+    ];
+
+    protected $hidden = [
+        'emp_password'
+    ];
+
+    // บอก Laravel ว่ารหัสผ่านอยู่ที่ไหน
+    public function getAuthPassword()
+    {
+        return $this->emp_password;
+    }
 }
-
-
