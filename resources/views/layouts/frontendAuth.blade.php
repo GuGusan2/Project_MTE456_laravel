@@ -135,7 +135,12 @@
                     <li class="nav-item"><a class="nav-link" href="/home/menu">🍜 Menu</a></li>
                     <li class="nav-item"><a class="nav-link" href="https://devbanban.com/?p=4425">🔗 Link</a></li>
                     <li class="nav-item"><a class="nav-link" href="/login">🔑 Login</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/dashboard">📊 BackOffice</a></li>
+                    @if (session('role') === 'admin')
+                        <li class="nav-item"><a class="nav-link" href="/dashboard">📊 BackOffice</a></li>
+                    @endif
+                    @if (session('role') === 'staff')
+                        <li class="nav-item"><a class="nav-link" href="/dashboard">📊 BackOffice</a></li>
+                    @endif
                 </ul>
 
                 <form action="/search" method="get" class="d-flex" role="search">
@@ -153,9 +158,6 @@
         <div class="row">
             <div class="col-12">
                 @yield('showBanner')
-                <div class="alert alert-primary shadow-sm mt-3" role="alert">
-                    🍽️ :: เมนูอาหารแนะนำ ::
-                </div>
             </div>
         </div>
     </div>

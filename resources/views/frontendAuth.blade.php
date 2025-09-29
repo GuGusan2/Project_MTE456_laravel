@@ -10,8 +10,9 @@
 @section('showProduct')    
 @endsection
 
+@section('showBanner')
+@endsection
  
-
 @section('footer')
 @endsection
 

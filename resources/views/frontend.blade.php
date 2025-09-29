@@ -7,7 +7,7 @@
 @endsection
  
  
-@section('showEmployee')    
+@section('showProduct')    
 @endsection
 
 @section('showBanner')

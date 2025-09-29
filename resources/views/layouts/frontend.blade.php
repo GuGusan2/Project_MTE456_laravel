@@ -25,6 +25,8 @@
 
         .nav-item {
             border-right: 1px solid #e9cfca;
+            padding: 3px 0px;
+            background: #9b3720;
         }
 
         .nav-link {
@@ -94,6 +96,30 @@
             border-radius: 8px;
         }
 
+        .hold {
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
+            font-weight: bold;
+        }
+
+        .holdlog:hover {
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
+            background: #ee8a8a;
+        }
+
+        .holdlog:hover a {
+            background: transparent;
+        }
+
+        .holdlog a {
+            background: transparent;
+        }
+
+        .hold:hover {
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
+            background: #9e351d;
+            border: 2px double transparent;
+        }
+
         /* Footer */
         footer {
             background: linear-gradient(90deg, #fdf4ee, #ffe9dc);
@@ -131,11 +157,18 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link active" href="/">🏠 Home</a></li>
+                    <li class="nav-item" style="background: #91321c;"><a class="nav-link active" href="/">🏠
+                            Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="/home/menu">🍜 Menu</a></li>
                     <li class="nav-item"><a class="nav-link" href="https://devbanban.com/?p=4425">🔗 Link</a></li>
                     <li class="nav-item"><a class="nav-link" href="/login">🔑 Login</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/dashboard">📊 BackOffice</a></li>
+
+                    @if (session('role') === 'admin')
+                        <li class="nav-item"><a class="nav-link" href="/dashboard">📊 BackOffice</a></li>
+                    @endif
+                    @if (session('role') === 'staff')
+                        <li class="nav-item"><a class="nav-link" href="/dashboard">📊 BackOffice</a></li>
+                    @endif
                 </ul>
 
                 <form action="/search" method="get" class="d-flex" role="search">
@@ -143,9 +176,62 @@
                         required value="{{ $keyword ?? '' }}">
                     <button class="btn btn-success" type="submit">ค้นหา</button>
                 </form>
+                @if (session('role') === 'admin')
+                    <div class="dropdown ms-3">
+                        <a class="text-white hold d-flex align-items-center rounded px-3 py-2 shadow-sm text-decoration-none dropdown-toggle"
+                            href="#" role="button" id="profileDropdown" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <img src="{{ asset('storage/' . session('emp_pic')) }}" alt="Profile"
+                                class="rounded-circle me-2"
+                                style="width:40px; height:40px; object-fit:cover; border: 3px solid #fdf4ee">
+                            <span>{{ session('emp_name') }}</span>
+                        </a>
+
+                        <ul class="holdlog dropdown-menu dropdown-menu-start w-100" aria-labelledby="profileDropdown">
+                            <li>
+                                <a class="dropdown-item" href="#"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Hidden Logout Form -->
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
+                        @csrf
+                    </form>
+                @endif
+                @if (session('role') === 'staff')
+                    <div class="dropdown ms-3">
+                        <a class="text-white hold d-flex align-items-center rounded px-3 py-2 shadow-sm text-decoration-none dropdown-toggle"
+                            href="#" role="button" id="profileDropdown" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <img src="{{ asset('storage/' . session('emp_pic')) }}" alt="Profile"
+                                class="rounded-circle me-2"
+                                style="width:40px; height:40px; object-fit:cover; border: 3px solid #fdf4ee">
+                            <span>{{ session('emp_name') }}</span>
+                        </a>
+
+                        <ul class="holdlog dropdown-menu dropdown-menu-start w-100" aria-labelledby="profileDropdown">
+                            <li>
+                                <a class="dropdown-item" href="#"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Hidden Logout Form -->
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
+                        @csrf
+                    </form>
+                @endif
             </div>
         </div>
     </nav>
+    @yield('navbar')
     <!-- end navbar -->
 
     <!-- Banner / Content -->
@@ -159,7 +245,6 @@
             </div>
         </div>
     </div>
-    @yield('navbar')
 
     <!-- Footer -->
     <footer class="mt-5">

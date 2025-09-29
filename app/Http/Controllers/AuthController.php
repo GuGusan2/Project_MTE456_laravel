@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\EmployeeModel;
+use App\Models\MemberModel;
 
 class AuthController extends Controller
 {
@@ -52,10 +53,8 @@ class AuthController extends Controller
             // Redirect ตาม role
             if ($user->role === 'admin') {
                 return redirect('/dashboard');
-            } elseif ($user->role === 'staff') {
+            } else  {
                 return redirect('/dashboard');
-            } else {
-                return redirect('/');
             }
         }
 
@@ -73,4 +72,5 @@ class AuthController extends Controller
 
         return redirect('/');
     }
+
 }
