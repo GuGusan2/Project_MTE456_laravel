@@ -38,6 +38,14 @@
             color: #ffdd99 !important;
         }
 
+        .navbar{
+            font-size: 17px;
+        }
+
+        .nav-item {
+            margin-inline-start: 10px;
+        }
+
         /* ปุ่ม login */
         .btn-dark {
             background: #ffb347;
@@ -57,14 +65,11 @@
         footer {
             background: #fdf4ee;
             padding: 15px 0;
+            color: #5c2a1d;
+            font-size: 0.95rem;
             border-top: 2px solid #c94f35;
         }
 
-        footer p {
-            margin: 0;
-            color: #5c2a1d;
-            font-size: 0.95rem;
-        }
     </style>
 
     {{-- CSS เพิ่มเติมของ User --}}
@@ -120,7 +125,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-flex align-items-center" href="#"
                                 id="profileDropdown" role="button" data-bs-toggle="dropdown">
-                                <img src="{{ asset('storage/' . session('emp_pic')) }}" class="rounded-circle"
+                                <img src="{{ asset('storage/' . session('emp_pic')) }}" class="rounded-circle" style="width:35px; height:35px; object-fit:cover;"
                                     width="40" height="40">
                                 <span class="ms-2">{{ session('emp_name') }}</span>
                             </a>
@@ -193,6 +198,7 @@
         @yield('content')
     </main>
 
+    @include('sweetalert::alert')
     {{-- Footer --}}
     <footer class="mt-5">
         <p class="text-center">© 2025 by Chanidapha & Weerawat | ร้านอาหารแสนสุข</p>

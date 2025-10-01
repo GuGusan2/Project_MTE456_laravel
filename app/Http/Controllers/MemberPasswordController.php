@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert; //sweet alert
 use Illuminate\Support\Facades\Hash;
 
 class MemberPasswordController extends Controller
@@ -33,6 +34,7 @@ class MemberPasswordController extends Controller
         $member->mem_password = Hash::make($request->new_password);
         $member->save();
 
-        return redirect()->route('member.profile')->with('success', 'เปลี่ยนรหัสผ่านเรียบร้อยแล้ว ✅');
+        Alert::success('Update Successfully');
+        return redirect('/member/memberinfo');
     }
 }
