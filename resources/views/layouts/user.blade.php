@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ร้านอาหารแสนสุข</title>
 
+    {{-- Font Awesome  --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
     {{-- Bootstrap --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -38,7 +42,7 @@
             color: #ffdd99 !important;
         }
 
-        .navbar{
+        .navbar {
             font-size: 17px;
         }
 
@@ -70,6 +74,44 @@
             border-top: 2px solid #c94f35;
         }
 
+        /* พื้นฐานของ nav */
+        .nav-link {
+            font-weight: 600;
+            color: #fff !important;
+            /* สีขาวบนพื้นแดง */
+            transition: all 0.3s ease-in-out;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ไอคอนเริ่มต้น */
+        .icon-nav {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease, color 0.3s ease;
+            color: #ffd54f;
+            /* ทอง */
+        }
+
+        /* hover effect */
+        .nav-link:hover {
+            color: #ffd54f !important;
+            /* ข้อความเป็นสีทอง */
+        }
+
+        .nav-link:hover .icon-nav {
+            transform: translateY(-3px) scale(1.2);
+            /* เด้งขึ้น + ขยายเบาๆ */
+            color: #fff176;
+            /* เหลืองสด */
+        }
+
+        /* active state */
+        .nav-link.active,
+        .nav-link.active .icon-nav {
+            color: #ffeb3b !important;
+            /* เหลืองทอง เวลา active */
+        }
     </style>
 
     {{-- CSS เพิ่มเติมของ User --}}
@@ -100,16 +142,24 @@
 
                 {{-- 🟢 เมนูฝั่งซ้าย --}}
                 <ul class="navbar-nav me-auto">
+
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('user.home') ? 'active' : '' }}"
-                            href="{{ route('user.home') }}">🏠 หน้าแรก</a>
+                            href="{{ route('user.home') }}">
+                            <i class="fa-solid fa-house icon-nav"></i> หน้าแรก
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/#recommended') }}">🍽 เมนู</a>
+                        <a class="nav-link" href="{{ url('/#recommended') }}">
+                            <i class="fa-solid fa-utensils icon-nav"></i> เมนู
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/#contact') }}">📞 ติดต่อ</a>
+                        <a class="nav-link" href="{{ url('/#contact') }}">
+                            <i class="fa-solid fa-phone icon-nav"></i> ติดต่อ
+                        </a>
                     </li>
+
 
                     {{-- 🆕 BackOffice --}}
                     @if (session('role') === 'admin' || session('role') === 'staff')
@@ -125,14 +175,15 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-flex align-items-center" href="#"
                                 id="profileDropdown" role="button" data-bs-toggle="dropdown">
-                                <img src="{{ asset('storage/' . session('emp_pic')) }}" class="rounded-circle" style="width:35px; height:35px; object-fit:cover;"
-                                    width="40" height="40">
+                                <img src="{{ asset('storage/' . session('emp_pic')) }}" class="rounded-circle"
+                                    style="width:35px; height:35px; object-fit:cover;" width="40" height="40">
                                 <span class="ms-2">{{ session('emp_name') }}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
                                     <form action="/logout" method="POST">@csrf
-                                        <button type="submit" class="dropdown-item text-danger">🚪 ออกจากระบบ</button>
+                                        <button type="submit" class="dropdown-item text-danger">🚪
+                                            ออกจากระบบ</button>
                                     </form>
                                 </li>
                             </ul>
@@ -150,7 +201,8 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
                                     <form action="{{ route('logout') }}" method="POST">@csrf
-                                        <button type="submit" class="dropdown-item text-danger">🚪 ออกจากระบบ</button>
+                                        <button type="submit" class="dropdown-item text-danger">🚪
+                                            ออกจากระบบ</button>
                                     </form>
                                 </li>
                             </ul>
@@ -170,12 +222,15 @@
                                         ข้อมูลพื้นฐาน</a></li>
                                 <li><a class="dropdown-item" href="{{ route('member.password') }}">🔑
                                         เปลี่ยนรหัสผ่าน</a></li>
-                                <li><a class="dropdown-item" href="{{ route('member.favorites') }}">⭐ เมนูโปรด</a></li>
-                                <li><a class="dropdown-item" href="{{ route('member.profile') }}">🖼 จัดการโปรไฟล์</a>
+                                <li><a class="dropdown-item" href="{{ route('member.favorites') }}">⭐ เมนูโปรด</a>
+                                </li>
+                                <li><a class="dropdown-item" href="{{ route('member.profile') }}">🖼
+                                        จัดการโปรไฟล์</a>
                                 </li>
                                 <li>
                                     <form action="/logout" method="POST">@csrf
-                                        <button type="submit" class="dropdown-item text-danger">🚪 ออกจากระบบ</button>
+                                        <button type="submit" class="dropdown-item text-danger">🚪
+                                            ออกจากระบบ</button>
                                     </form>
                                 </li>
                             </ul>

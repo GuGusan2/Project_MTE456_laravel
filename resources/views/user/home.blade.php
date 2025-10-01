@@ -12,13 +12,13 @@
         </div>
         <div class="carousel-inner rounded">
             <div class="carousel-item active">
-                <img src="{{ asset('images/banner.png') }}" class="d-block w-100" alt="Banner 1">
+                <img src="{{ asset('images/banner1.png') }}" class="d-block w-100" alt="Banner 1">
             </div>
             <div class="carousel-item">
-                <img src="{{ asset('images/banner.png') }}" class="d-block w-100" alt="Banner 2">
+                <img src="{{ asset('images/banner2.png') }}" class="d-block w-100" alt="Banner 2">
             </div>
             <div class="carousel-item">
-                <img src="{{ asset('images/banner.png') }}" class="d-block w-100" alt="Banner 3">
+                <img src="{{ asset('images/banner3.png') }}" class="d-block w-100" alt="Banner 3">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">

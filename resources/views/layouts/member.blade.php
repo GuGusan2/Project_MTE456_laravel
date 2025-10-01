@@ -88,7 +88,6 @@
             border-top: 2px solid #c94f35;
         }
 
-<<<<<<< HEAD
         footer p {
             margin: 0;
             color: #5c2a1d;
@@ -191,8 +190,6 @@
             color: #ffeb3b !important;
             /* เหลืองทอง เวลา active */
         }
-=======
->>>>>>> 2e8b8e7860d6bcd5656cb9e86ff6738f0682f736
     </style>
 
 
@@ -224,7 +221,6 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('member.home') ? 'active' : '' }}"
-<<<<<<< HEAD
                             href="{{ route('member.home') }}">
                             <i class="fa-solid fa-house icon-nav"></i> หน้าแรก
                         </a>
@@ -244,13 +240,6 @@
                             <i class="fa-solid fa-phone icon-nav"></i> ติดต่อ
                         </a>
                     </li>
-=======
-                           href="{{ route('member.home') }}"> หน้าแรก</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/member/home#recommended') }}"> เมนู</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/member/home#promotion') }}"> โปรโมชั่น</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/member/home#contact') }}"> ติดต่อ</a></li>
->>>>>>> 2e8b8e7860d6bcd5656cb9e86ff6738f0682f736
                 </ul>
 
 
@@ -261,11 +250,7 @@
                             <a class="nav-link dropdown-toggle d-flex align-items-center" href="#"
                                 id="profileDropdown" role="button" data-bs-toggle="dropdown">
                                 <img src="{{ asset('storage/' . session('mem_pic')) }}" class="rounded-circle"
-<<<<<<< HEAD
                                     width="40" height="40">
-=======
-                                    style="width:35px; height:35px; object-fit:cover;" width="40" height="40">
->>>>>>> 2e8b8e7860d6bcd5656cb9e86ff6738f0682f736
                                 <span class="ms-2">{{ session('mem_name') }}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-3">
