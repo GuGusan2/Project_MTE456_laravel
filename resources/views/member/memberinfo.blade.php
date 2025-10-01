@@ -6,8 +6,8 @@
 
     <div class="card shadow-sm">
         <div class="card-body text-center">
-            <img src="{{ asset('uploads/members/' . ($member->mem_pic ?? 'default.png')) }}" 
-                 class="rounded-circle mb-3" width="100" height="100" alt="avatar">
+            <img src="{{ asset('storage/' . $member->mem_pic) }}" 
+                 class="rounded-circle mb-3 object-cover" width="100" height="100" alt="avatar">
             <h5>{{ $member->mem_name }}</h5>
             <p class="text-muted">👤 Username: {{ $member->mem_username }}</p>
             <p>📧 Email: {{ $member->mem_email }}</p>

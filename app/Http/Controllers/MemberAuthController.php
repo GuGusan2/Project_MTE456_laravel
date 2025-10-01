@@ -18,7 +18,7 @@ class MemberAuthController extends Controller
         session([
             'mem_id'   => $member->mem_id,
             'mem_name' => $member->mem_name,
-            'mem_pic'  => $member->mem_pic ?? 'default.png',
+            'mem_pic'  => $member->mem_pic,
         ]);
     }
 
@@ -42,14 +42,10 @@ class MemberAuthController extends Controller
             'mem_pic'       => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
 
-        // ✅ default avatar = default.png
-        $filename = 'default.png';
-
-        // 📂 ถ้ามีการอัปโหลดรูป → เก็บไฟล์ใน storage/app/public/uploads/member
-        if ($request->hasFile('mem_pic')) {
-            $path = $request->file('mem_pic')->store('uploads/member', 'public'); 
-            $filename = $path; // เช่น uploads/member/xxxx.png
-        }
+        $imagePath = null;
+            if ($request->hasFile('mem_pic')) {
+                $imagePath = $request->file('mem_pic')->store('uploads/member', 'public');
+            }
 
         // ✅ บันทึกสมาชิกใหม่
         $member = MemberModel::create([
@@ -60,7 +56,7 @@ class MemberAuthController extends Controller
             'mem_gender'   => $request->mem_gender,
             'mem_dob'      => $request->mem_dob,
             'mem_password' => Hash::make($request->mem_password),
-            'mem_pic'      => $filename, // ✅ เก็บ path เช่น uploads/member/xxxx.png
+            'mem_pic'      => $imagePath,
             'point'        => 100,
         ]);
 
