@@ -111,13 +111,14 @@ class MemberProfileController extends Controller
 
         if (!Hash::check($request->current_password, $member->mem_password)) {
             return back()->withErrors(['current_password' => 'รหัสผ่านปัจจุบันไม่ถูกต้อง ❌']);
+            
         }
 
         $member->mem_password = Hash::make($request->new_password);
         $member->save();
 
         
-        Alert::success('เปลี่ยนรหัสผ่านเรียบร้อย 🎉');
+        Alert::success('สำเร็จ','เปลี่ยนรหัสผ่านเรียบร้อย 🎉');
 
         return redirect('/member/memberinfo');
     }
@@ -189,24 +190,38 @@ class MemberProfileController extends Controller
     }
 
     // 📌 ลบบัญชี
-    public function deleteAccount(Request $request)
-    {
-        $request->validate([
-            'password' => 'required'
-        ]);
+public function deleteAccount(Request $request)
+{
+    $request->validate([
+        'password' => 'required'
+    ]);
 
-        $member = Auth::guard('member')->user();
+    $member = Auth::guard('member')->user();
 
-        if (!Hash::check($request->password, $member->mem_password)) {
-            return back()->withErrors(['password' => 'รหัสผ่านไม่ถูกต้อง ❌']);
-        }
-
-        Auth::guard('member')->logout();
-
-        // 🔹 ถ้าไม่อยากลบจริง ๆ → ให้ใช้ SoftDeletes ที่ Model
-        $member->delete();
-
-        return redirect()->route('login')
-            ->with('account_deleted', 'บัญชีของคุณถูกลบเรียบร้อย ❌');
+    // ตรวจสอบรหัสผ่าน
+    if (!Hash::check($request->password, $member->mem_password)) {
+        return back()->withErrors(['password' => 'รหัสผ่านไม่ถูกต้อง ❌']);
     }
+
+    // ออกจากระบบ
+    Auth::guard('member')->logout();
+
+    // ลบไฟล์รูป ถ้าไม่ใช่ default
+    if ($member->mem_pic && $member->mem_pic !== 'default.png') {
+        $oldPath = public_path('uploads/member/' . $member->mem_pic);
+        if (file_exists($oldPath)) {
+            unlink($oldPath);
+        }
+    }
+
+    // ลบข้อมูลใน DB
+    $member->delete();
+
+    // ✅ กลับไปหน้าแรกของ user
+    return redirect()->route('user.home')
+        ->with('account_deleted', 'บัญชีของคุณถูกลบเรียบร้อย ❌');
+}
+
+
+
 }

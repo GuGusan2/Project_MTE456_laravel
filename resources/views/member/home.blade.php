@@ -31,7 +31,7 @@
 
         {{-- 🍴 เมนูแนะนำ --}}
         <section id="recommended" class="mb-5">
-            <h3 class="mb-4 text-center fw-bold text-danger">🍴 เมนูแนะนำ</h3>
+            <h3 class="mb-4 text-center fw-bold text-danger-soft">🍴 เมนูแนะนำ</h3>
             <div class="row g-4">
                 @foreach ($menus as $menu)
                     <div class="col-md-4">
@@ -128,7 +128,7 @@
                         <div class="card-body">
                             <i class="bi bi-envelope-fill fs-1 text-danger"></i>
                             <h5 class="mt-3 fw-bold">อีเมล</h5>
-                            <p class="mb-0">example@gmail.com</p>
+                            <p class="mb-0">sansuk@gmail.com</p>
                         </div>
                     </div>
                 </div>

@@ -133,7 +133,7 @@
                         <div class="card-body">
                             <i class="bi bi-envelope-fill fs-1 text-danger"></i>
                             <h5 class="mt-3">อีเมล</h5>
-                            <p class="mb-0">example@gmail.com</p>
+                            <p class="mb-0">sansuk@gmail.com</p>
                         </div>
                     </div>
                 </div>

@@ -4,9 +4,10 @@
 <div class="container py-4">
 
     {{-- 🔙 ปุ่มกลับ --}}
-    <a href="{{ route('member.menu') }}" class="btn btn-secondary mb-3">
+   <a href="{{ url()->previous() }}" class="btn btn-outline-danger mb-3">
     ⬅ ย้อนกลับ
 </a>
+
 
 
     {{-- รายละเอียดเมนู --}}

@@ -15,7 +15,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 use App\Http\Controllers\UserPageController;
 
-use App\Http\Controllers\MemberPageController;   // ⭐ เพิ่มตรงนี้
+use App\Http\Controllers\MemberPageController;  
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ReviewController;
 

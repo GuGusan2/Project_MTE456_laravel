@@ -15,19 +15,39 @@
 
 
     <!-- โหลดฟอนต์จาก Google Fonts -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
+
     <style>
-        /* ใช้ Poppins เป็นฟอนต์หลัก */
         body {
-            background-color: #fffdf8;
-            font-family: "Poppins", sans-serif;
-            font-weight: 400;
-            color: #3b1f1f;
+            font-family: 'Poppins', sans-serif;
+            background-color: #fffaf5;
+            color: #333;
+            line-height: 1.6;
         }
+
+        /* ทำให้หัวข้อดูเด่น */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        .navbar-brand {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+
+        /* ปุ่ม + เมนูให้หนานิดนึง */
+        .btn,
+        .nav-link {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+        }
+
 
         /* Navbar */
         .navbar {
@@ -234,14 +254,16 @@
 
                 {{-- โปรไฟล์ / Logout --}}
                 <ul class="navbar-nav">
-                    @if (session('role') === 'member')
+                    @if (Auth::guard('member')->check())
+                        {{-- ✅ ถ้า login เป็น member --}}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-flex align-items-center" href="#"
                                 id="profileDropdown" role="button" data-bs-toggle="dropdown">
-                                <img src="{{ asset('storage/' . session('mem_pic')) }}" class="rounded-circle"
-                                    width="40" height="40">
-                                <span class="ms-2">{{ session('mem_name') }}</span>
+                                <img src="{{ asset('storage/' . (Auth::guard('member')->user()->mem_pic ?? 'uploads/member/default.png')) }}"
+                                    class="rounded-circle" width="40" height="40" alt="avatar">
+                                <span class="ms-2">{{ Auth::guard('member')->user()->mem_name }}</span>
                             </a>
+
                             <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-3">
                                 <li>
                                     <a class="dropdown-item d-flex align-items-center"
@@ -268,7 +290,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <form action="/logout" method="POST">
+                                    <form action="{{ route('logout') }}" method="POST">
                                         @csrf
                                         <button type="submit"
                                             class="dropdown-item d-flex align-items-center text-danger fw-bold">
@@ -287,10 +309,22 @@
                                     </form>
                                 </li>
                             </ul>
-
+                        </li>
+                    @else
+                        {{-- ❌ ถ้ายังไม่ได้ login --}}
+                        <li class="nav-item">
+                            <a href="{{ route('login') }}" class="btn btn-light fw-bold">
+                                <i class="fa-solid fa-right-to-bracket me-1"></i> เข้าสู่ระบบ
+                            </a>
+                        </li>
+                        <li class="nav-item ms-2">
+                            <a href="{{ route('member.register') }}" class="btn btn-warning fw-bold">
+                                <i class="fa-solid fa-user-plus me-1"></i> สมัครสมาชิก
+                            </a>
                         </li>
                     @endif
                 </ul>
+
             </div>
         </div>
     </nav>
@@ -310,37 +344,39 @@
     {{-- SweetAlert2 --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    @if (session('account_deleted'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'ลบบัญชีสำเร็จ!',
-                text: "{{ session('account_deleted') }}",
-                confirmButtonColor: '#d33'
-            });
-        </script>
-    @endif
-
     <script>
-        // ยืนยันลบบัญชี
         document.getElementById('deleteAccountForm')?.addEventListener('submit', function(e) {
             e.preventDefault();
             Swal.fire({
                 title: '⚠️ แน่ใจหรือไม่?',
-                text: "คุณกำลังจะลบบัญชีถาวร!",
-                icon: 'warning',
+                text: "คุณต้องกรอกรหัสผ่านเพื่อยืนยันการลบ!",
+                input: 'password',
+                inputPlaceholder: 'กรอกรหัสผ่าน...',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
                 cancelButtonColor: '#aaa',
                 confirmButtonText: 'ใช่, ลบเลย',
-                cancelButtonText: 'ยกเลิก'
+                cancelButtonText: 'ยกเลิก',
+                preConfirm: (password) => {
+                    if (!password) {
+                        Swal.showValidationMessage('กรุณากรอกรหัสผ่านก่อน ❌');
+                    }
+                    return password;
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    this.submit();
+                    let form = document.getElementById('deleteAccountForm');
+                    let input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'password';
+                    input.value = result.value;
+                    form.appendChild(input);
+                    form.submit();
                 }
             });
         });
     </script>
+
 </body>
 
 </html>

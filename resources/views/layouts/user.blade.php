@@ -9,18 +9,35 @@
     {{-- Font Awesome  --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-
     {{-- Bootstrap --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    {{-- CSS หลัก --}}
+
+    <!-- โหลดฟอนต์จาก Google Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+
     <style>
-        /* ใช้ Poppins เป็นฟอนต์หลัก */
         body {
-            background-color: #fffdf8;
-            font-family: "Poppins", sans-serif;
-            font-weight: 400;
-            color: #3b1f1f;
+            font-family: 'Poppins', sans-serif;
+            background-color: #fffaf5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* ทำให้หัวข้อดูเด่น */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        .navbar-brand {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
         }
 
         /* Navbar */
@@ -78,19 +95,7 @@
             font-family: "Poppins", sans-serif;
         }
 
-        /* เพิ่มเติม: Heading */
-        h1,
-        h2,
-        h3 {
-            font-family: "Poppins", sans-serif;
-            font-weight: 700;
-            color: #3b1f1f;
-        }
-
-        p {
-            font-family: "Poppins", sans-serif;
-            font-weight: 400;
-        }
+       
 
         /* การ์ดโปรโมชั่น */
         .promotion-card {
