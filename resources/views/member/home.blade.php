@@ -68,8 +68,6 @@
                         @if ($promo->pro_pic)
                             <img src="{{ asset('storage/' . $promo->pro_pic) }}" class="card-img-top promo-img"
                                 alt="promotion image">
-                        @else
-                            <img src="{{ asset('images/no-image.jpg') }}" class="card-img-top promo-img" alt="no image">
                         @endif
                     </div>
 

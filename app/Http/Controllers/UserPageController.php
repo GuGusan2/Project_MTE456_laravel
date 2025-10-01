@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\MenuModel;
+use App\Models\PromotionModel;
 
 class UserPageController extends Controller
 {
@@ -11,7 +12,8 @@ class UserPageController extends Controller
     public function home()
     {
         $menus = MenuModel::take(3)->get(); // ดึงมา 3 เมนูจาก DB
-        return view('user.home', compact('menus'));
+        $promotions = PromotionModel::orderBy('start_date', 'desc')->get();
+        return view('user.home', compact('menus','promotions'));
     }
 
     // 🍽 หน้าเมนูทั้งหมด

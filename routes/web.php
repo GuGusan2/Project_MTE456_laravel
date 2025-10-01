@@ -104,7 +104,6 @@ Route::middleware('auth:admin')->group(function () {
 
 //employee crud
 Route::get('/employee/searchfilter', [EmployeeController::class, 'searchfilter']);
-Route::get('/employee/searchEmployee', [EmployeeController::class, 'searchEmployee']);
 Route::get('/employee', [EmployeeController::class, 'index']);
 Route::get('/employee/adding',  [EmployeeController::class, 'adding']);
 Route::post('/employee',  [EmployeeController::class, 'create']);
@@ -127,7 +126,6 @@ Route::put('/member/reset/{id}',  [MemberController::class, 'resetPassword']);
 
 //menu crud
 Route::get('menu/searchfilter', [MenuController::class, 'searchfilter']);
-Route::get('menu/searchMenu', [MenuController::class, 'searchMenu']);
 Route::get('/menu', [MenuController::class, 'index']);
 Route::get('/menu/adding',  [MenuController::class, 'adding']);
 Route::post('/menu',  [MenuController::class, 'create']);

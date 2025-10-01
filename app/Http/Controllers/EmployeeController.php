@@ -341,34 +341,6 @@ class EmployeeController extends Controller
     } //fun resetPassword
 
     // ฟังก์ชันแสดงลิส พร้อมค้นหา
-    public function searchEmployee(Request $request)
-    {
-        // ตรวจสอบค่าที่ส่งมา (debug)
-        // print_r($_GET);
-        // exit;
-
-        // ใช้ Bootstrap style ใน pagination
-        Paginator::useBootstrap();
-
-        // รับค่าคีย์เวิร์ดจากฟอร์มหรือ URL
-        $keyword = $request->keyword;
-
-        // ถ้ามีการกรอก keyword เข้ามา
-        if (strlen($keyword) > 0) {
-            // ค้นหาสินค้าจากชื่อ employee (emp_name) โดยใช้ LIKE
-            $employees = EmployeeModel::where('emp_name', 'like', "%{$keyword}%")
-                ->paginate(5);  // แสดงหน้า ละ 5 รายการ
-        } else {
-            // ถ้าไม่มี keyword ให้แสดง employee ทั้งหมด เรียงตาม id จากมากไปน้อย
-            $employees = EmployeeModel::orderBy('emp_id', 'desc')
-                ->paginate(5);  // แสดงหน้า ละ 5 รายการ
-        }
-
-        // ส่งตัวแปร emps และ keyword ไปที่หน้า view
-        return view('backsearch.emp_index', compact('employees', 'keyword'));
-    }
-
-    // ฟังก์ชันแสดงลิส พร้อมค้นหา
     public function searchfilter(Request $request)
     {
         // ตรวจสอบค่าที่ส่งมา (debug)
@@ -378,21 +350,20 @@ class EmployeeController extends Controller
         // ใช้ Bootstrap style ใน pagination
         Paginator::useBootstrap();
 
-        // รับค่าคีย์เวิร์ดจากฟอร์มหรือ URL
-        $keyword = $request->keyword;
+        $query = EmployeeModel::query();
 
-        // ถ้ามีการกรอก keyword เข้ามา
-        if (strlen($keyword) > 0) {
-            // ค้นหาสินค้าจากชื่อ employee (emp_name) โดยใช้ LIKE
-            $employees = EmployeeModel::where('role', 'like', "%{$keyword}%")
-                ->paginate(5);  // แสดงหน้า ละ 5 รายการ
-        } else {
-            // ถ้าไม่มี keyword ให้แสดง employee ทั้งหมด เรียงตาม id จากมากไปน้อย
-            $employees = EmployeeModel::orderBy('emp_id', 'desc')
-                ->paginate(5);  // แสดงหน้า ละ 5 รายการ
+        // ค้นหาตามชื่อ
+        if ($request->filled('search')) {
+            $query->where('emp_name', 'like', '%' . $request->search . '%');
         }
 
-        // ส่งตัวแปร emps และ keyword ไปที่หน้า view
-        return view('backsearch.emp_index', compact('employees', 'keyword'));
+        // เลือกประเภท
+        if ($request->filled('role')) {
+            $query->where('role', $request->role);
+        }
+
+        $employees = $query->paginate(5)->withQueryString();
+        // ส่งตัวแปร emps และ search ไปที่หน้า view
+        return view('backsearch.emp_index', compact('employees'));
     }
 } //class

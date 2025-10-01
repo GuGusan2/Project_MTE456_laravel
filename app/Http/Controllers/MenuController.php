@@ -227,35 +227,6 @@ class MenuController extends Controller
     } //remove 
 
     // ฟังก์ชันแสดงลิส พร้อมค้นหา
-    public function searchMenu(Request $request)
-    {
-        // ตรวจสอบค่าที่ส่งมา (debug)
-        // print_r($_GET);
-        // exit;
-
-        // ใช้ Bootstrap style ใน pagination
-        Paginator::useBootstrap();
-
-        // รับค่าคีย์เวิร์ดจากฟอร์มหรือ URL
-        $keyword = $request->keyword;
-
-        // ถ้ามีการกรอก keyword เข้ามา
-        if (strlen($keyword) > 0) {
-            // ค้นหาจากชื่อ member (mem_name) โดยใช้ LIKE
-            $menus = MenuModel::where('menu_name', 'like', "%{$keyword}%")
-                ->paginate(5);  // แสดงหน้า ละ 5 รายการ
-        } else {
-            // ถ้าไม่มี keyword ให้แสดง employee ทั้งหมด เรียงตาม id จากมากไปน้อย
-            $menus = MenuModel::orderBy('menu_id', 'desc')
-                ->paginate(5);  // แสดงหน้า ละ 5 รายการ
-
-        }
-
-        // ส่งตัวแปร emps และ keyword ไปที่หน้า view
-        return view('backsearch.menu_index', compact('menus', 'keyword'));
-    }
-
-    // ฟังก์ชันแสดงลิส พร้อมค้นหา
     public function searchfilter(Request $request)
     {
         // ตรวจสอบค่าที่ส่งมา (debug)
@@ -265,22 +236,20 @@ class MenuController extends Controller
         // ใช้ Bootstrap style ใน pagination
         Paginator::useBootstrap();
 
-        // รับค่าคีย์เวิร์ดจากฟอร์มหรือ URL
-        $keyword = $request->keyword;
+        $query = MenuModel::query();
 
-        // ถ้ามีการกรอก keyword เข้ามา
-        if (strlen($keyword) > 0) {
-            // ค้นหาจากชื่อ member (mem_name) โดยใช้ LIKE
-            $menus = MenuModel::where('menu_type', '=', "{$keyword}")
-                ->paginate(5);  // แสดงหน้า ละ 5 รายการ
-        } else {
-            // ถ้าไม่มี keyword ให้แสดง employee ทั้งหมด เรียงตาม id จากมากไปน้อย
-            $menus = MenuModel::orderBy('menu_id', 'desc')
-                ->paginate(5);  // แสดงหน้า ละ 5 รายการ
-
+        // ค้นหาตามชื่อ
+        if ($request->filled('search')) {
+            $query->where('menu_name', 'like', '%' . $request->search . '%');
         }
 
+        // เลือกประเภท
+        if ($request->filled('menu_type')) {
+            $query->where('menu_type', $request->menu_type);
+        }
+
+        $menus = $query->paginate(5)->withQueryString();
         // ส่งตัวแปร emps และ keyword ไปที่หน้า view
-        return view('backsearch.menu_index', compact('menus', 'keyword'));
+        return view('backsearch.menu_index', compact('menus'));
     }
 } //class
