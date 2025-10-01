@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\Favorite;
+use RealRashid\SweetAlert\Facades\Alert; //sweet alert
 use App\Models\MemberModel;
 
 class MemberProfileController extends Controller
@@ -45,7 +46,7 @@ class MemberProfileController extends Controller
             'mem_name'  => 'required|min:3',
             'mem_username' => [
                 'required',
-                'min:3',
+                'min:2',
                 Rule::unique('tbl_member', 'mem_username')->ignore($member->mem_id, 'mem_id'),
             ],
             'mem_email' => [
@@ -84,7 +85,10 @@ class MemberProfileController extends Controller
 
         $member->save();
 
-        return back()->with('success', 'อัปเดตโปรไฟล์เรียบร้อย ✅');
+        Alert::success('อัปเดตโปรไฟล์เรียบร้อย !!');
+        
+        return redirect('/member/memberinfo');
+        
     }
 
     // 📌 Member Info
@@ -112,7 +116,10 @@ class MemberProfileController extends Controller
         $member->mem_password = Hash::make($request->new_password);
         $member->save();
 
-        return back()->with('success', 'เปลี่ยนรหัสผ่านเรียบร้อย 🎉');
+        
+        Alert::success('เปลี่ยนรหัสผ่านเรียบร้อย 🎉');
+
+        return redirect('/member/memberinfo');
     }
 
     // 📌 อัปโหลด/เปลี่ยน Avatar
@@ -154,7 +161,10 @@ class MemberProfileController extends Controller
         $member->mem_pic = 'default.png';
         $member->save();
 
-        return back()->with('success', 'ลบรูปโปรไฟล์เรียบร้อย ✅');
+        
+        Alert::success('ลบรูปโปรไฟล์เรียบร้อย');
+
+        return back();
     }
 
     // 📌 เมนูโปรด
