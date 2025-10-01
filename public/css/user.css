@@ -1,0 +1,147 @@
+/* 🎨 Global */
+body {
+    font-family: 'Prompt', sans-serif;
+    background-color: #fffaf5;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* 🔻 Navbar */
+.navbar {
+    background: linear-gradient(90deg, #b30000, #ff4d4d);
+}
+
+.navbar-brand {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.nav-link {
+    color: #fff !important;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #ffe066 !important;
+}
+
+/* 🏠 Banner */
+#banner img {
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* 🍴 Card Menu */
+.card {
+    border: none;
+    border-radius: 12px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card img {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-title {
+    font-weight: 600;
+    color: #222;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* 💰 Price */
+.fw-bold.text-danger {
+    font-size: 1.1rem;
+    color: #e60000 !important;
+}
+
+/* 🟨 Buttons */
+.btn-warning {
+    background-color: #ffcc00;
+    border: none;
+    color: #222;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.btn-warning:hover {
+    background-color: #ffb700;
+    color: #111;
+}
+
+.btn-primary {
+    background-color: #ff6600;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: #e65c00;
+}
+
+.btn-secondary {
+    background-color: #666;
+    border: none;
+    border-radius: 8px;
+}
+
+.btn-secondary:hover {
+    background-color: #444;
+}
+
+/* 🔍 Search & Filter */
+form .form-control {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+form .form-control:focus {
+    border-color: #ff6600;
+    box-shadow: 0 0 5px rgba(255, 102, 0, 0.5);
+}
+
+/* 📑 Pagination */
+.pagination .page-link {
+    border: none;
+    color: #ff6600;
+    font-weight: 600;
+    margin: 0 3px;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #ff6600;
+    color: #fff;
+    border-radius: 6px;
+}
+
+/* 📞 Contact */
+#contact {
+    background: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* 🔻 Footer */
+footer {
+    background: #222;
+    color: #fff;
+    font-size: 0.9rem;
+}

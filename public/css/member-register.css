@@ -1,0 +1,62 @@
+/* 🔹 Register Page Style */
+.register-container {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fefefe;
+}
+
+.register-card {
+    width: 100%;
+    max-width: 500px;
+    background: #fff;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 10;
+}
+
+.register-card h3 {
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.register-form label {
+    font-weight: 500;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.register-form input {
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    transition: all 0.2s;
+    background-color: #fff;
+    pointer-events: auto;
+    position: relative;
+    z-index: 10;
+}
+
+.register-form input:focus {
+    border-color: #ff6a95;
+    box-shadow: 0 0 4px rgba(255,106,149,0.5);
+    outline: none;
+}
+
+.register-form button {
+    border-radius: 8px;
+    font-size: 16px;
+    padding: 10px;
+    font-weight: 600;
+    background: linear-gradient(90deg, #ff7eb3, #ff758c, #ff6a95);
+    border: none;
+    color: #fff;
+}
+.register-form button:hover {
+    opacity: 0.9;
+}

@@ -23,7 +23,7 @@ class MenuController extends Controller
         // เช็คว่าเป็น admin หรือ staff
         $this->middleware(function ($request, $next) {
             if (!in_array(session('role'), ['admin', 'staff'])) {
-                return redirect('/login');
+                return redirect('login');
             }
             return $next($request);
         });

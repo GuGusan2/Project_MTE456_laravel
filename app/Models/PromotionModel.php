@@ -7,10 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 class PromotionModel extends Model
 {
     protected $table = 'tbl_promotion';
-    protected $primaryKey = 'pro_id'; // ตั้งให้ตรงกับชื่อจริงใน DB
-    protected $fillable = ['pro_id', 'conditions', 'mem_id', 'emp_id', 'end_date', 'start_date','timestamp','pro_pic','detail'];
-    public $incrementing = true; // ถ้า primary key เป็นตัวเลข auto increment
-    public $timestamps = false; // ใส่บรรทัดนี้ถ้าไม่มี created_at, updated_at
+    protected $primaryKey = 'pro_id'; // คีย์หลักตรงกับ DB
+
+    // กำหนดฟิลด์ที่แก้ไขได้
+    protected $fillable = [
+        'conditions',
+        'detail',
+        'start_date',
+        'end_date',
+        'mem_id',
+        'emp_id',
+        'pro_pic',
+        'timestamp'
+    ];
+
+    public $incrementing = true; // ✅ pro_id เป็น auto increment
+    public $timestamps = false;  // ✅ ไม่มี created_at, updated_at
 }
-
-

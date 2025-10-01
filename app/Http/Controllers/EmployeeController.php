@@ -24,7 +24,7 @@ class EmployeeController extends Controller
         // เช็คว่าเป็น admin จริงไหม ?
         $this->middleware(function ($request, $next) {
             if (session('role') !== 'admin') {
-                return redirect('/login');
+                return redirect('login');
             }
             return $next($request);
         });

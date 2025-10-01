@@ -23,7 +23,7 @@ class MemberController extends Controller
         // เช็คว่าเป็น admin หรือ staff
         $this->middleware(function ($request, $next) {
             if (!in_array(session('role'), ['admin', 'staff'])) {
-                return redirect('/login');
+                return redirect('login');
             }
             return $next($request);
         });
@@ -74,7 +74,7 @@ class MemberController extends Controller
 
         //rule ตั้งขึ้นว่าจะเช็คอะไรบ้าง
         $validator = Validator::make($request->all(), [
-            'mem_username' => 'required|min:3|unique:tbl_member',
+            'mem_username' => 'required|min:2|unique:tbl_member',
             'mem_email' => 'required|email|min:3|unique:tbl_member',
             'mem_name' => 'required|min:3',
             'mem_password' => 'required|min:3',
@@ -176,7 +176,7 @@ class MemberController extends Controller
         $validator = Validator::make($request->all(), [
             'mem_username' => [
                 'required',
-                'min:3',
+                'min:2',
                 Rule::unique('tbl_member', 'mem_username')->ignore($mem_id, 'mem_id'), //ห้ามแก้ซ้ำ
             ],
             'mem_email' => [

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator;   // 👈 เพิ่มบรรทัดนี้
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // ✅ บังคับ pagination ใช้ Bootstrap 5
+        Paginator::useBootstrapFive();
     }
 }

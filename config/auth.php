@@ -36,18 +36,19 @@ return [
     */
 
   'guards' => [
+ 
+     'admin' => [
+        'driver' => 'session',
+        'provider' => 'employees',
+    ],
     // 'web' => [
     //     'driver' => 'session',
     //     'provider' => 'users',
     // ],
-    // 'login' => [
-    //     'driver' => 'session',
-    //     'provider' => 'loginusers',
-    // ],
- 
-     'admin' => [
+
+    'member' => [
         'driver' => 'session',
-        'provider' => 'admins',
+        'provider' => 'members',
     ],
     
 ],
@@ -71,18 +72,19 @@ return [
     */
 
 'providers' => [
-    // 'users' => [
+
+     'employees' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\EmployeeModel::class,
+    ],
+    //  'users' => [
     //     'driver' => 'eloquent',
     //     'model' => App\Models\User::class,
     // ],
-    // 'loginusers' => [
-    //     'driver' => 'eloquent',
-    //     'model' => App\Models\LoginModel::class,
-    // ],
- 
-     'admins' => [
+
+    'members' => [
         'driver' => 'eloquent',
-        'model' => App\Models\EmployeeModel::class,
+        'model' => App\Models\MemberModel::class,
     ],
 ],
 
@@ -127,5 +129,12 @@ return [
     */
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
+
+
+
+    
+    
+
+
 
 ];

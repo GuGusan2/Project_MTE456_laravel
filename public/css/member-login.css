@@ -1,0 +1,56 @@
+/* 🔹 Login Page Style */
+.login-container {
+    min-height: 80vh;
+    background: #fefefe;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    background: #fff;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 10;
+}
+
+.login-card h3 {
+    font-weight: 600;
+    color: #333;
+}
+
+.login-form label {
+    font-weight: 500;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.login-form input {
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    transition: all 0.2s;
+    background-color: #fff;
+    pointer-events: auto;   /* ✅ ป้องกัน overlay block */
+    position: relative;
+    z-index: 10;
+}
+
+.login-form input:focus {
+    border-color: #ff6a95;
+    box-shadow: 0 0 4px rgba(255,106,149,0.5);
+    outline: none;
+}
+
+.login-form button {
+    border-radius: 8px;
+    font-size: 16px;
+    padding: 10px;
+    font-weight: 600;
+    background: linear-gradient(90deg, #ff7eb3, #ff758c, #ff6a95);
+    border: none;
+}
+.login-form button:hover {
+    opacity: 0.9;
+}
