@@ -5,5 +5,6 @@ protected $middlewareGroups = [
         // ...
         \RealRashid\SweetAlert\ToSweetAlert::class,
     ],
+    'auth' => [\App\Http\Middleware\Authenticate::class,],
     // ...
 ];

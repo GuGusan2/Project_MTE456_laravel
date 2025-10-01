@@ -109,16 +109,7 @@ class AuthController extends Controller
                 'role'     => 'member',
             ]);
 
-<<<<<<< HEAD
             return redirect()->route('member.home');
-=======
-            // Redirect ตาม role
-            if ($user->role === 'admin') {
-                return redirect('/dashboard');
-            } else  {
-                return redirect('/dashboard');
-            }
->>>>>>> 40417eca0e18322722f6bb87c56d2f8718641add
         }
 
         // 🔎 ถ้าไม่เจอ → เช็คในตาราง Employee
@@ -153,7 +144,6 @@ class AuthController extends Controller
         $request->session()->forget(['mem_id', 'mem_name', 'mem_pic', 'role']);
     }
 
-<<<<<<< HEAD
     // ถ้า login มาจาก guard admin (admin/staff)
     if (Auth::guard('admin')->check()) {
         Auth::guard('admin')->logout();
@@ -167,6 +157,4 @@ class AuthController extends Controller
     return redirect('/')->with('success', 'ออกจากระบบเรียบร้อยแล้ว');
 }
 
-=======
->>>>>>> 40417eca0e18322722f6bb87c56d2f8718641add
 }
