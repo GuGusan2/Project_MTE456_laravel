@@ -28,6 +28,7 @@
                 <span class="carousel-control-next-icon"></span>
             </button>
         </div>
+<<<<<<< HEAD
 
 
 
@@ -52,6 +53,17 @@
             </div>
             <div class="text-center">
                 <a href="{{ route('user.menu') }}" class="btn btn-warning px-4">ดูเมนูทั้งหมด ➝</a>
+=======
+        <div class="carousel-inner rounded">
+            <div class="carousel-item active">
+                <img src="{{ asset('images/banner1.png') }}" class="d-block w-100" alt="Banner 1">
+            </div>
+            <div class="carousel-item">
+                <img src="{{ asset('images/banner2.png') }}" class="d-block w-100" alt="Banner 2">
+            </div>
+            <div class="carousel-item">
+                <img src="{{ asset('images/banner3.png') }}" class="d-block w-100" alt="Banner 3">
+>>>>>>> 0b6eb52f351ae8b0d581fac77bf193ed671ac56f
             </div>
         </div>
 
