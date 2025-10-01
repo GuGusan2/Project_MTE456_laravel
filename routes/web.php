@@ -62,7 +62,7 @@ Route::prefix('member')->middleware('auth:member')->group(function () {
     Route::post('/account/delete', [MemberProfileController::class, 'deleteAccount'])->name('member.account.delete');
 });
 
-
+ 
 
 
 // ==========================
