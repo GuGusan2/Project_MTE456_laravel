@@ -4,7 +4,7 @@
     <div class="container">
 
         {{-- 🎉 Banner --}}
-        <div id="bannerCarousel" class="carousel slide mb-5 shadow" data-bs-ride="carousel" data-bs-interval="3000">
+        <div id="bannerCarousel" class="carousel slide mb-5 shadow rounded" data-bs-ride="carousel" data-bs-interval="3000">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="0" class="active"></button>
                 <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="1"></button>
@@ -12,23 +12,22 @@
             </div>
             <div class="carousel-inner rounded">
                 <div class="carousel-item active">
-                    <img src="{{ asset('images/banner.png') }}" class="d-block w-100" alt="Banner 1">
+                    <img src="{{ asset('images/banner1.png') }}" class="d-block w-100 rounded" alt="Banner 1">
                 </div>
                 <div class="carousel-item">
-                    <img src="{{ asset('images/banner.png') }}" class="d-block w-100" alt="Banner 2">
+                    <img src="{{ asset('images/banner2.png') }}" class="d-block w-100 rounded" alt="Banner 2">
                 </div>
                 <div class="carousel-item">
-                    <img src="{{ asset('images/banner.png') }}" class="d-block w-100" alt="Banner 3">
+                    <img src="{{ asset('images/banner3.png') }}" class="d-block w-100 rounded" alt="Banner 3">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
+                <span class="carousel-control-prev-icon bg-dark rounded-circle p-2"></span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon"></span>
+                <span class="carousel-control-next-icon bg-dark rounded-circle p-2"></span>
             </button>
         </div>
-<<<<<<< HEAD
 
 
 
@@ -53,34 +52,22 @@
             </div>
             <div class="text-center">
                 <a href="{{ route('user.menu') }}" class="btn btn-warning px-4">ดูเมนูทั้งหมด ➝</a>
-=======
-        <div class="carousel-inner rounded">
-            <div class="carousel-item active">
-                <img src="{{ asset('images/banner1.png') }}" class="d-block w-100" alt="Banner 1">
-            </div>
-            <div class="carousel-item">
-                <img src="{{ asset('images/banner2.png') }}" class="d-block w-100" alt="Banner 2">
-            </div>
-            <div class="carousel-item">
-                <img src="{{ asset('images/banner3.png') }}" class="d-block w-100" alt="Banner 3">
->>>>>>> 0b6eb52f351ae8b0d581fac77bf193ed671ac56f
             </div>
         </div>
 
-        @if ((session('role') === 'admin') || (session('role') === 'staff'))
+        @if (session('role') === 'admin' || session('role') === 'staff')
             {{-- 🎁 โปรโมชั่น --}}
             <section id="promotion" class="mb-5">
                 <h3 class="mb-4 text-center fw-bold text-success">🎁 โปรโมชั่น</h3>
 
-                <div class="d-flex flex-wrap justify-content-center gap-4">
+                <div class="d-flex flex-nowrap justify-content-center gap-4">
                     @foreach ($promotions as $promo)
                         {{-- 🔹 การ์ดโปรโมชั่น --}}
-                        <div class="card promotion-card shadow border-0 rounded-3 "
-                            style="cursor:pointer; width:auto; height:auto; max-width:350px ;" data-bs-toggle="modal"
+                        <div class="card promotion-card shadow border-0 rounded-3 " data-bs-toggle="modal"
                             data-bs-target="#promoModal{{ $promo->pro_id }}">
 
                             @if ($promo->pro_pic)
-                                <img src="{{ asset('storage/' . $promo->pro_pic) }}" class="card-img-top promo-img"
+                                <img src="{{ asset('storage/' . $promo->pro_pic) }}" class="card-img-top promo-img" style="height: 100%; object-position: center; object-fit: cover; width: 100%;"
                                     alt="promotion image">
                             @endif
                         </div>

@@ -42,19 +42,7 @@
             font-family: "Poppins", sans-serif;
         }
 
-        .nav-link {
-            color: #fff5e1 !important;
-            transition: 0.3s;
-            font-weight: 500;
-            font-family: "Poppins", sans-serif;
-        }
-
-        .nav-link:hover,
-        .nav-link.active {
-            color: #ffdd99 !important;
-        }
-
-        .navbar{
+        .navbar {
             font-size: 17px;
         }
 
@@ -112,28 +100,31 @@
 
         /* การ์ดโปรโมชั่น */
         .promotion-card {
-            overflow: hidden;
-            border-radius: 12px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            width: 100%;
-            /* ✅ ให้เต็มคอลัมน์ */
+            flex: 1 1 300px;
+            /* ขยายการ์ดขั้นต่ำ 300px */
             max-width: 400px;
-            /* ✅ เพิ่มขนาดสูงสุดเป็น 400px */
+            /* ไม่ให้เกิน 400px */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 20px;
+            overflow: hidden;
+            height: auto;
         }
-
 
         .promotion-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
 
+        /* รูปในโปรโมชัน */
         .promo-img {
             width: 100%;
-            height: auto;
-            /* ✅ ใช้ขนาดจริง */
-            object-fit: contain;
-            /* แสดงเต็มรูป ไม่ครอบ */
+            height: 280px;
+            /* กำหนดความสูงให้เท่ากันทุกการ์ด */
+            object-fit: cover;
+            /* ครอบรูปสวย ไม่บิดเบี้ยว */
+            border-radius: 20px;
         }
+
 
         .dropdown-menu {
             background: #fffaf5;
@@ -167,8 +158,6 @@
         .icon-nav {
             font-size: 1.2rem;
             transition: transform 0.3s ease, color 0.3s ease;
-            color: #ffd54f;
-            /* ทอง */
         }
 
         /* hover effect */

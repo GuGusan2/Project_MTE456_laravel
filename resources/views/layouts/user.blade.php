@@ -15,9 +15,12 @@
 
     {{-- CSS หลัก --}}
     <style>
+        /* ใช้ Poppins เป็นฟอนต์หลัก */
         body {
             background-color: #fffdf8;
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            color: #3b1f1f;
         }
 
         /* Navbar */
@@ -26,20 +29,11 @@
         }
 
         .navbar-brand {
-            font-weight: bold;
+            font-weight: 700;
+            /* Bold */
             font-size: 1.4rem;
             color: #ffd700 !important;
-        }
-
-        .nav-link {
-            color: #fff5e1 !important;
-            transition: 0.3s;
-            font-weight: 500;
-        }
-
-        .nav-link:hover,
-        .nav-link.active {
-            color: #ffdd99 !important;
+            font-family: "Poppins", sans-serif;
         }
 
         .navbar {
@@ -55,9 +49,11 @@
             background: #ffb347;
             border: none;
             color: #3b1f1f;
-            font-weight: bold;
+            font-weight: 600;
+            /* Semi-bold */
             border-radius: 20px;
             transition: 0.3s;
+            font-family: "Poppins", sans-serif;
         }
 
         .btn-dark:hover {
@@ -72,6 +68,72 @@
             color: #5c2a1d;
             font-size: 0.95rem;
             border-top: 2px solid #c94f35;
+        }
+
+        footer p {
+            margin: 0;
+            color: #5c2a1d;
+            font-size: 0.95rem;
+            font-weight: 400;
+            font-family: "Poppins", sans-serif;
+        }
+
+        /* เพิ่มเติม: Heading */
+        h1,
+        h2,
+        h3 {
+            font-family: "Poppins", sans-serif;
+            font-weight: 700;
+            color: #3b1f1f;
+        }
+
+        p {
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+        }
+
+        /* การ์ดโปรโมชั่น */
+        .promotion-card {
+            flex: 1 1 300px;
+            /* ขยายการ์ดขั้นต่ำ 300px */
+            max-width: 400px;
+            /* ไม่ให้เกิน 400px */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 20px;
+            overflow: hidden;
+            height: auto;
+        }
+
+        .promotion-card:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* รูปในโปรโมชัน */
+        .promo-img {
+            width: 100%;
+            height: 480px;
+            object-fit: cover;
+            /* ครอบรูปสวย ไม่บิดเบี้ยว */
+            border-radius: 20px;
+        }
+
+
+        .dropdown-menu {
+            background: #fffaf5;
+            border-radius: 12px;
+            padding: 10px;
+        }
+
+        .dropdown-item {
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .dropdown-item:hover {
+            background: #ffe0e0;
+            border-radius: 8px;
+            transform: translateX(4px);
         }
 
         /* พื้นฐานของ nav */
@@ -89,8 +151,6 @@
         .icon-nav {
             font-size: 1.2rem;
             transition: transform 0.3s ease, color 0.3s ease;
-            color: #ffd54f;
-            /* ทอง */
         }
 
         /* hover effect */
@@ -164,7 +224,7 @@
                     {{-- 🆕 BackOffice --}}
                     @if (session('role') === 'admin' || session('role') === 'staff')
                         <li class="nav-item">
-                            <a class="nav-link" href="/dashboard">💻 BackOffice</a>
+                            <a class="nav-link" href="/dashboard"><i class="icon-nav fa-solid fas fa-tv"></i> BackOffice</a>
                         </li>
                     @endif
                 </ul>

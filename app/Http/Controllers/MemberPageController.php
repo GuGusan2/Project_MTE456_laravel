@@ -13,7 +13,7 @@ class MemberPageController extends Controller
 public function home()
 {
     $menus = MenuModel::orderBy('timestamp', 'desc')->take(3)->get(); // ⬅️ จาก 4 → 3
-    $promotions = PromotionModel::orderBy('start_date', 'desc')->take(3)->get();
+    $promotions = PromotionModel::orderBy('start_date', 'desc')->get();
 
     return view('member.home', compact('menus', 'promotions'));
 }

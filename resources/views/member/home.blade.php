@@ -58,17 +58,16 @@
         <section id="promotion" class="mb-5">
             <h3 class="mb-4 text-center fw-bold text-success">🎁 โปรโมชั่น</h3>
 
-            <div class="d-flex flex-wrap justify-content-center gap-4">
+            <div class="d-flex flex-nowrap justify-content-center gap-4">
                 @foreach ($promotions as $promo)
                     {{-- 🔹 การ์ดโปรโมชั่น --}}
-                    <div class="card promotion-card shadow border-0 rounded-3 "
-                        style="cursor:pointer; width:auto; height:auto; max-width:350px ;" data-bs-toggle="modal"
+                    <div class="card promotion-card shadow border-0 rounded-3 " data-bs-toggle="modal"
                         data-bs-target="#promoModal{{ $promo->pro_id }}">
 
                         @if ($promo->pro_pic)
-                            <img src="{{ asset('storage/' . $promo->pro_pic) }}" class="card-img-top promo-img"
-                                alt="promotion image">
-                        @endif
+                                <img src="{{ asset('storage/' . $promo->pro_pic) }}" class="card-img-top promo-img" style="height: 100%; object-position: center; object-fit: cover; width: 100%;"
+                                    alt="promotion image">
+                            @endif
                     </div>
 
                     {{-- 🔹 Modal --}}
