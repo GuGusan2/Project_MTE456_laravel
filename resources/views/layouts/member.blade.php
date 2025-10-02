@@ -90,10 +90,15 @@
         /* Footer */
         footer {
             background: #fdf4ee;
-            padding: 15px 0;
-            color: #e1dede;
+            padding: 20px 0;
+            /* เพิ่ม padding ให้โปร่งขึ้น */
+            margin-top: 40px;
+            /* ✅ เพิ่มระยะห่างจาก content ด้านบน */
+            color: #e7dad6;
             font-size: 0.95rem;
             border-top: 2px solid #c94f35;
+            position: relative;
+            /* ✅ ป้องกันไม่ให้ footer ทับ pagination */
         }
 
         footer p {
@@ -102,6 +107,8 @@
             font-weight: 400;
             font-family: "Poppins", sans-serif;
         }
+
+
 
         /* เพิ่มเติม: Heading */
         h1,
@@ -339,8 +346,8 @@
     @include('sweetalert::alert')
 
     {{-- Footer --}}
-    <footer class="mt-5 fixed-bottom">
-        <p class="text-center">© 2025 ร้านอาหารแสนสุข | Member Zone</p>
+    <footer class="mt-5">
+        <p class="text-center">© 2025 by Chanidapha & Weerawat | ร้านอาหารแสนสุข</p>
     </footer>
 
     {{-- Bootstrap JS --}}
