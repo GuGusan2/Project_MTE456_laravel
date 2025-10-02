@@ -219,6 +219,6 @@ class MemberProfileController extends Controller
         // ✅ กลับไปหน้าแรกของ user
         Alert::success('บัญชีของคุณถูกลบเรียบร้อย');
 
-        return redirect()->route('user.home');
+        return redirect('/');
     }
 }
