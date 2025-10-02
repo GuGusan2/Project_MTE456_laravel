@@ -397,6 +397,39 @@
         </script>
     @endif
 
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'สำเร็จ',
+                text: "{{ session('success') }}",
+                confirmButtonColor: '#3085d6'
+            });
+        </script>
+    @endif
+
+    @if (session('info'))
+        <script>
+            Swal.fire({
+                icon: 'info',
+                title: 'แจ้งเตือน',
+                text: "{{ session('info') }}",
+                confirmButtonColor: '#ffc107'
+            });
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'ผิดพลาด',
+                text: "{{ session('error') }}",
+                confirmButtonColor: '#d33'
+            });
+        </script>
+    @endif
+
     <script>
         document.getElementById('deleteAccountForm')?.addEventListener('submit', function(e) {
             e.preventDefault();
