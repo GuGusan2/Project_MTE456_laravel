@@ -339,7 +339,7 @@
     @include('sweetalert::alert')
 
     {{-- Footer --}}
-    <footer class="mt-5">
+    <footer class="mt-5 fixed-bottom">
         <p class="text-center">© 2025 ร้านอาหารแสนสุข | Member Zone</p>
     </footer>
 
