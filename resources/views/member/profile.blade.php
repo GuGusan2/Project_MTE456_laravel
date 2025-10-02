@@ -31,16 +31,20 @@
 
                             {{-- รูปโปรไฟล์ --}}
                             <div class="text-center mb-3">
-                                <img src="{{ $member->mem_pic && file_exists(storage_path('app/public/' . $member->mem_pic))
-                                    ? asset('storage/' . $member->mem_pic)
-                                    : asset('images/user.png') }}"
+                                <img id="previewImage"
+                                    src="{{ $member->mem_pic && file_exists(storage_path('app/public/' . $member->mem_pic))
+                                        ? asset('storage/' . $member->mem_pic)
+                                        : asset('images/user.png') }}"
                                     class="rounded-circle shadow object-cover border-3 border-info" width="160"
                                     height="120" alt="avatar">
+
                                 <div>
-                                    <input type="file" name="mem_pic" class="form-control mt-2">
+                                    <input type="file" name="mem_pic" id="mem_pic" class="form-control mt-2"
+                                        accept="image/*">
                                     <small class="text-muted">รองรับ jpeg, jpg, png | ไม่เกิน 5MB</small>
                                 </div>
                             </div>
+
 
                             {{-- ชื่อ-นามสกุล --}}
                             <div class="mb-3">
@@ -114,4 +118,19 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('mem_pic').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('previewImage');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+
 @endsection
