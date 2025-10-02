@@ -32,7 +32,7 @@ class ReviewController extends Controller
         $memberId = Auth::guard('member')->id();
 
         if (!$memberId) {
-            return redirect()->route('member.login')
+            return redirect()->route('login')
                 ->with('error', 'กรุณาเข้าสู่ระบบก่อนจึงจะรีวิวได้ ❌');
         }
 
@@ -43,6 +43,12 @@ class ReviewController extends Controller
             'rating' => $request->rating,
         ]);
 
-        return back()->with('success', 'รีวิวถูกบันทึกแล้ว! ✅');
+        // ✅ ดึง URL ก่อนหน้า ถ้าไม่มี fallback ไปหน้าเมนู
+        $previous = session('previous_url', route('member.menu'));
+
+        return redirect()->route('member.menudetail', $menu_id)
+            ->with('success', 'รีวิวถูกบันทึกแล้ว! ✅')
+            ->with('previous_url', $previous);
     }
 }
+

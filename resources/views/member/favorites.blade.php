@@ -61,7 +61,7 @@
 
 <div class="container">
 
-    <a href="{{ route('member.menu') }}" class="btn btn-secondary">
+    <a href="{{ route('member.menu') }}" class="btn btn-secondary mb-4">
     ⬅ ย้อนกลับ
 </a>
 

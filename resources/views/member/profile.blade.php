@@ -31,11 +31,11 @@
 
                             {{-- รูปโปรไฟล์ --}}
                             <div class="text-center mb-3">
-                                @if ($member->mem_pic && $member->mem_pic !== 'default.png')
-                                    <img src="{{ asset('storage/' . $member->mem_pic) }}"
-                                        class="rounded-circle shadow object-cover border-3 border-info" width="160"
-                                        height="120" alt="avatar">
-                                @endif
+                                <img src="{{ $member->mem_pic && file_exists(storage_path('app/public/' . $member->mem_pic))
+                                    ? asset('storage/' . $member->mem_pic)
+                                    : asset('images/user.png') }}"
+                                    class="rounded-circle shadow object-cover border-3 border-info" width="160"
+                                    height="120" alt="avatar">
                                 <div>
                                     <input type="file" name="mem_pic" class="form-control mt-2">
                                     <small class="text-muted">รองรับ jpeg, jpg, png | ไม่เกิน 5MB</small>
@@ -78,7 +78,8 @@
                             {{-- Phone --}}
                             <div class="mb-3">
                                 <label for="mem_phone" class="form-label">เบอร์โทรศัพท์</label>
-                                <input type="text" name="mem_phone" id="mem_phone"
+                                <input type="tel" name="mem_phone" id="mem_phone" maxlength="10"
+                                    placeholder="เบอร์โทรศัพท์ 10 หลัก"
                                     class="form-control @error('mem_phone') is-invalid @enderror"
                                     value="{{ old('mem_phone', $member->mem_phone) }}" required>
                                 @error('mem_phone')

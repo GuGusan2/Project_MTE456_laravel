@@ -56,9 +56,9 @@
             {{-- Phone --}}
             <div class="mb-3">
                 <label for="mem_phone">เบอร์โทรศัพท์</label>
-                <input type="text" id="mem_phone" name="mem_phone" 
+                <input type="tel" id="mem_phone" name="mem_phone" 
                        class="form-control @error('mem_phone') is-invalid @enderror" 
-                       value="{{ old('mem_phone') }}">
+                       value="{{ old('mem_phone') }}"  maxlength="10" placeholder="เบอร์โทรศัพท์ 10 หลัก">
                 @error('mem_phone')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror

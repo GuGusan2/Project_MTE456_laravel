@@ -91,14 +91,13 @@
         footer {
             background: #fdf4ee;
             padding: 15px 0;
-            color: #5c2a1d;
+            color: #e1dede;
             font-size: 0.95rem;
             border-top: 2px solid #c94f35;
         }
 
         footer p {
             margin: 0;
-            color: #5c2a1d;
             font-size: 0.95rem;
             font-weight: 400;
             font-family: "Poppins", sans-serif;
@@ -259,8 +258,14 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-flex align-items-center" href="#"
                                 id="profileDropdown" role="button" data-bs-toggle="dropdown">
-                                <img src="{{ asset('storage/' . (Auth::guard('member')->user()->mem_pic ?? 'uploads/member/default.png')) }}"
-                                    class="rounded-circle" width="40" height="40" alt="avatar">
+                                {{-- <img src="{{ asset('storage/' . (Auth::guard('member')->user()->mem_pic)) }}"
+                                    class="rounded-circle" width="40" height="40" alt="avatar"> --}}
+                                <img src="{{ session('mem_pic') && file_exists(storage_path('app/public/' . session('mem_pic')))
+                                    ? asset('storage/' . session('mem_pic'))
+                                    : asset('images/user.png') }}"
+                                    class="rounded-circle shadow object-cover border-3 border-info" width="40"
+                                    height="40" alt="avatar">
+
                                 <span class="ms-2">{{ Auth::guard('member')->user()->mem_name }}</span>
                             </a>
 

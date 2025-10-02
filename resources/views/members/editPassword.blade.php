@@ -39,7 +39,7 @@
                 <div class="mb-3">
                     <label class="form-label fw-bold">New Password</label>
                     <input type="password" class="form-control" name="password" required
-                           placeholder="New Password (min. 3 characters)">
+                           placeholder="New Password at least 3 characters)">
                     @if(isset($errors) && $errors->has('password'))
                         <div class="text-danger small mt-1">{{ $errors->first('password') }}</div>
                     @endif
@@ -49,7 +49,7 @@
                 <div class="mb-3">
                     <label class="form-label fw-bold">Confirm Password</label>
                     <input type="password" class="form-control" name="password_confirmation" required
-                           placeholder="Confirm Password (min. 3 characters)" minlength="3">
+                           placeholder="Confirm Password at least 3 characters)" minlength="3">
                     @if(isset($errors) && $errors->has('password_confirmation'))
                         <div class="text-danger small mt-1">{{ $errors->first('password_confirmation') }}</div>
                     @endif

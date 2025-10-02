@@ -10,14 +10,13 @@ use App\Models\PromotionModel;
 class MemberPageController extends Controller
 {
     // 🏠 หน้า Home
-public function home()
-{
-    $menus = MenuModel::orderBy('timestamp', 'desc')->take(3)->get(); // ⬅️ จาก 4 → 3
-    $promotions = PromotionModel::orderBy('start_date', 'desc')->get();
+    public function home()
+    {
+        $menus = MenuModel::orderBy('timestamp', 'desc')->take(3)->get(); // ⬅️ จาก 4 → 3
+        $promotions = PromotionModel::orderBy('start_date', 'desc')->get();
 
-    return view('member.home', compact('menus', 'promotions'));
-}
-
+        return view('member.home', compact('menus', 'promotions'));
+    }
 
     // 🍽 หน้าเมนู
     public function menu(Request $request)
@@ -36,8 +35,8 @@ public function home()
         }
 
         // 📌 เลือกประเภทอาหาร
-        if ($request->filled('category')) {
-            $query->where('menu_type', $request->category);
+        if ($request->filled('menu_type')) {
+            $query->where('menu_type', $request->menu_type);
         }
 
         // ✅ แบ่งหน้า
@@ -67,9 +66,15 @@ public function home()
     }
 
     // 📌 รายละเอียดเมนู
-    public function menudetail($id)
+    public function menudetail($id, Request $request)
     {
+        // เก็บ URL ก่อนหน้าลง session (ถ้าไม่ใช่ menudetail เอง)
+        if (!str_contains(url()->previous(), '/member/menu/')) {
+            session(['previous_url' => url()->previous()]);
+        }
+
         $menu = MenuModel::with(['reviews.member'])->findOrFail($id);
+
         return view('member.menudetail', compact('menu'));
     }
 }

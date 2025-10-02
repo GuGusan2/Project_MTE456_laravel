@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\Favorite;
+use Illuminate\Support\Facades\Storage; //สำหรับเก็บไฟล์ภาพ
 use RealRashid\SweetAlert\Facades\Alert; //sweet alert
 use App\Models\MemberModel;
 
@@ -24,9 +25,9 @@ class MemberProfileController extends Controller
     public function updateProfile(Request $request)
     {
         /** @var \App\Models\MemberModel $member */
-    $member = Auth::guard('member')->user();
+        $member = Auth::guard('member')->user();
 
-    // ...
+        // ...
         $messages = [
             'mem_name.required' => 'กรุณากรอกข้อมูล',
             'mem_name.min' => 'ต้องมีอย่างน้อย :min ตัวอักษร',
@@ -50,7 +51,8 @@ class MemberProfileController extends Controller
                 Rule::unique('tbl_member', 'mem_username')->ignore($member->mem_id, 'mem_id'),
             ],
             'mem_email' => [
-                'required','email',
+                'required',
+                'email',
                 Rule::unique('tbl_member', 'mem_email')->ignore($member->mem_id, 'mem_id'),
             ],
             'mem_phone' => 'required|max:10|min:10',
@@ -64,16 +66,14 @@ class MemberProfileController extends Controller
 
         // 📂 อัปโหลดรูปใหม่ + ลบไฟล์เก่า
         if ($request->hasFile('mem_pic')) {
-            if ($member->mem_pic && $member->mem_pic != 'default.png') {
-                $oldPath = public_path('uploads/member/'.$member->mem_pic);
-                if (file_exists($oldPath)) unlink($oldPath);
+            // ถ้ามีรูปเดิมให้ลบไฟล์รูปเก่าออกจาก storage
+            if ($member->mem_pic) {
+                Storage::disk('public')->delete($member->mem_pic);
             }
-
-            $file = $request->file('mem_pic');
-            $filename = time().'_'.$file->getClientOriginalName();
-            $file->move(public_path('uploads/member'), $filename);
-
-            $member->mem_pic = $filename;
+            // บันทึกไฟล์รูปใหม่ลงโฟลเดอร์ 'uploads/member' ใน disk 'public'
+            $imagePath = $request->file('mem_pic')->store('uploads/member', 'public');
+            // อัปเดต path รูปภาพใหม่ใน model
+            $member->mem_pic = $imagePath;
         }
 
         // 📂 อัปเดตข้อมูลอื่น
@@ -86,9 +86,8 @@ class MemberProfileController extends Controller
         $member->save();
 
         Alert::success('อัปเดตโปรไฟล์เรียบร้อย !!');
-        
+
         return redirect('/member/memberinfo');
-        
     }
 
     // 📌 Member Info
@@ -111,14 +110,13 @@ class MemberProfileController extends Controller
 
         if (!Hash::check($request->current_password, $member->mem_password)) {
             return back()->withErrors(['current_password' => 'รหัสผ่านปัจจุบันไม่ถูกต้อง ❌']);
-            
         }
 
         $member->mem_password = Hash::make($request->new_password);
         $member->save();
 
-        
-        Alert::success('สำเร็จ','เปลี่ยนรหัสผ่านเรียบร้อย 🎉');
+
+        Alert::success('สำเร็จ', 'เปลี่ยนรหัสผ่านเรียบร้อย 🎉');
 
         return redirect('/member/memberinfo');
     }
@@ -133,16 +131,14 @@ class MemberProfileController extends Controller
         $member = Auth::guard('member')->user();
 
         if ($request->hasFile('mem_pic')) {
-            if ($member->mem_pic && $member->mem_pic != 'default.png') {
-                $oldPath = public_path('uploads/member/'.$member->mem_pic);
-                if (file_exists($oldPath)) unlink($oldPath);
+            // ถ้ามีรูปเดิมให้ลบไฟล์รูปเก่าออกจาก storage
+            if ($member->mem_pic) {
+                Storage::disk('public')->delete($member->mem_pic);
             }
-
-            $file = $request->file('mem_pic');
-            $filename = time().'_'.$file->getClientOriginalName();
-            $file->move(public_path('uploads/member'), $filename);
-
-            $member->mem_pic = $filename;
+            // บันทึกไฟล์รูปใหม่ลงโฟลเดอร์ 'uploads/member' ใน disk 'public'
+            $imagePath = $request->file('mem_pic')->store('uploads/member', 'public');
+            // อัปเดต path รูปภาพใหม่ใน model
+            $member->mem_pic = $imagePath;
             $member->save();
         }
 
@@ -154,19 +150,21 @@ class MemberProfileController extends Controller
     {
         $member = Auth::guard('member')->user();
 
-        if ($member->mem_pic && $member->mem_pic != 'default.png') {
-            $oldPath = public_path('uploads/member/'.$member->mem_pic);
-            if (file_exists($oldPath)) unlink($oldPath);
+        // ถ้ามีรูปเดิมที่ไม่ใช่ default → ลบออก
+        if ($member->mem_pic && $member->mem_pic !== 'images/user.png') {
+            Storage::disk('public')->delete($member->mem_pic);
         }
 
-        $member->mem_pic = 'default.png';
+        // เซ็ตกลับไปใช้ default
+        $member->mem_pic = 'images/user.png';
         $member->save();
 
-        
         Alert::success('ลบรูปโปรไฟล์เรียบร้อย');
 
         return back();
     }
+
+
 
     // 📌 เมนูโปรด
     public function favorites()
@@ -183,45 +181,44 @@ class MemberProfileController extends Controller
         $member = Auth::guard('member')->user();
 
         Favorite::where('mem_id', $member->mem_id)
-                ->where('menu_id', $menu_id)
-                ->delete();
+            ->where('menu_id', $menu_id)
+            ->delete();
 
         return back()->with('success', 'ลบออกจากเมนูโปรดแล้ว ❌');
     }
 
     // 📌 ลบบัญชี
-public function deleteAccount(Request $request)
-{
-    $request->validate([
-        'password' => 'required'
-    ]);
+    public function deleteAccount(Request $request)
+    {
+        $request->validate([
+            'password' => 'required'
+        ]);
 
-    $member = Auth::guard('member')->user();
+        $member = Auth::guard('member')->user();
 
-    // ตรวจสอบรหัสผ่าน
-    if (!Hash::check($request->password, $member->mem_password)) {
-        return back()->withErrors(['password' => 'รหัสผ่านไม่ถูกต้อง ❌']);
-    }
+        // ตรวจสอบรหัสผ่าน
+        if (!Hash::check($request->password, $member->mem_password)) {
+            Alert::error('รหัสผ่านไม่ถูกต้อง ❌');
 
-    // ออกจากระบบ
-    Auth::guard('member')->logout();
-
-    // ลบไฟล์รูป ถ้าไม่ใช่ default
-    if ($member->mem_pic && $member->mem_pic !== 'default.png') {
-        $oldPath = public_path('uploads/member/' . $member->mem_pic);
-        if (file_exists($oldPath)) {
-            unlink($oldPath);
+            return back();
         }
+
+        // ออกจากระบบ
+        Auth::guard('member')->logout();
+
+        if ($request->hasFile('mem_pic')) {
+            // ถ้ามีรูปเดิมให้ลบไฟล์รูปเก่าออกจาก storage
+            if ($member->mem_pic) {
+                Storage::disk('public')->delete($member->mem_pic);
+            }
+        }
+
+        // ลบข้อมูลใน DB
+        $member->delete();
+
+        // ✅ กลับไปหน้าแรกของ user
+        Alert::success('บัญชีของคุณถูกลบเรียบร้อย');
+
+        return redirect()->route('user.home');
     }
-
-    // ลบข้อมูลใน DB
-    $member->delete();
-
-    // ✅ กลับไปหน้าแรกของ user
-    return redirect()->route('user.home')
-        ->with('account_deleted', 'บัญชีของคุณถูกลบเรียบร้อย ❌');
-}
-
-
-
 }

@@ -18,6 +18,7 @@ class MemberModel extends Authenticatable
         'mem_email',
         'mem_dob',
         'point',
+        'role',
         'emp_id',
         'mem_pic',
     ];

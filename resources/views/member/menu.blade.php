@@ -11,7 +11,7 @@
                     placeholder="ค้นหาเมนู...">
             </div>
             <div class="col-md-3">
-                <select name="category" class="form-select">
+                <select name="menu_type" class="form-select">
                     <option value="">-- เลือกประเภท --</option>
                     <option value="food" {{ request('menu_type') == 'food' ? 'selected' : '' }}>อาหาร</option>
                     <option value="beverage" {{ request('menu_type') == 'beverage' ? 'selected' : '' }}>เครื่องดื่ม</option>
