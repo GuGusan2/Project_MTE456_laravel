@@ -87,18 +87,30 @@
             color: #fff;
         }
 
-        /* Footer */
+        /* Sticky Footer */
+        html,
+        body {
+            height: 100%;
+            /* ✅ ทำให้ body กินพื้นที่เต็มหน้าจอ */
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            /* ✅ ใช้ Flexbox */
+        }
+
+        main {
+            flex: 1;
+            /* ✅ ดัน content ให้เต็มก่อน แล้ว footer ไปล่างสุด */
+        }
+
         footer {
             background: #fdf4ee;
-            padding: 20px 0;
-            /* เพิ่ม padding ให้โปร่งขึ้น */
-            margin-top: 40px;
-            /* ✅ เพิ่มระยะห่างจาก content ด้านบน */
-            color: #e7dad6;
+            padding: 15px 0;
+            color: #5c2a1d;
             font-size: 0.95rem;
             border-top: 2px solid #c94f35;
-            position: relative;
-            /* ✅ ป้องกันไม่ให้ footer ทับ pagination */
+            text-align: center;
+            width: 100%;
         }
 
         footer p {
@@ -107,6 +119,7 @@
             font-weight: 400;
             font-family: "Poppins", sans-serif;
         }
+
 
 
 
@@ -345,16 +358,44 @@
     <main class="py-4">@yield('content')</main>
     @include('sweetalert::alert')
 
-    {{-- Footer --}}
-    <footer class="mt-5">
+
+    {{-- Footer Sticky --}}
+    <footer>
         <p class="text-center">© 2025 by Chanidapha & Weerawat | ร้านอาหารแสนสุข</p>
     </footer>
+
 
     {{-- Bootstrap JS --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
 
     {{-- SweetAlert2 --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if (session('login_success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'สำเร็จ',
+                text: "{{ session('login_success') }}",
+                confirmButtonColor: '#3085d6',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
+
+    @if (session('register_success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'สำเร็จ',
+                text: "{{ session('register_success') }}",
+                confirmButtonColor: '#3085d6',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
 
     <script>
         document.getElementById('deleteAccountForm')?.addEventListener('submit', function(e) {
