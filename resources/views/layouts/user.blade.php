@@ -82,14 +82,13 @@
         footer {
             background: #fdf4ee;
             padding: 15px 0;
-            color: #5c2a1d;
+            color: #e7dad6;
             font-size: 0.95rem;
             border-top: 2px solid #c94f35;
         }
 
         footer p {
             margin: 0;
-            color: #5c2a1d;
             font-size: 0.95rem;
             font-weight: 400;
             font-family: "Poppins", sans-serif;
