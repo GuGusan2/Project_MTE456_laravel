@@ -97,10 +97,10 @@
 
                 {{-- Buttons --}}
                 <div class="text-end">
-                    <button type="submit" class="btn btn-primary me-2">
+                    <button type="submit" class="btn btn-primary ms-2 mb-2">
                         <i class="fa-solid fa-save me-1"></i> Update
                     </button>
-                    <a href="/menu" class="btn btn-danger">
+                    <a href="/menu" class="btn btn-danger btn-cancle ms-2 mb-2">
                         <i class="fa-solid fa-xmark me-1"></i> Cancel
                     </a>
                 </div>

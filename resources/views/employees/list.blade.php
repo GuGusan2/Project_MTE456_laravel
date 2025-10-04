@@ -10,23 +10,23 @@
         <div class="card shadow-sm mb-4">
             <div class="card-body row">
                 <form action="/employee/searchfilter" method="get" class="row" role="search">
-                    <div class="col-md-2 my-2">
+                    <div class="col-md-12 col-lg-2 my-2 col-sm-12">
                         <select class="form-select" name="role">
                             <option value="">-- เลือก Role --</option>
                             <option value="staff" {{ request('role') == 'staff' ? 'selected' : '' }}>staff</option>
                             <option value="admin" {{ request('role') == 'admin' ? 'selected' : '' }}>admin</option>
                         </select>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12 col-lg-6 col-sm-12">
                         <div class="col my-2">
                             <input type="text" name="search" value="{{ request('search') }}" class="form-control"
                                 placeholder="🔍 Search Employee Name">
                         </div>
                     </div>
-                    <div class="col-md-2 my-2 d-grid">
+                    <div class="col-md-12 my-2 d-grid col-lg-2 col-sm-12">
                         <button class="btn btn-success" type="submit">Search</button>
                     </div>
-                    <div class="col-md-2 my-2">
+                    <div class="col-md-12 my-2 col-lg-2 col-sm-12">
                         <a href="/employee" class="btn btn-secondary w-100">Reset</a>
                     </div>
                 </form>
@@ -73,7 +73,8 @@
                                 <td>{{ $row->emp_email }}</td>
                                 <td>{{ $row->emp_phone }}</td>
                                 <td class="text-center">
-                                    <span class="badge {{ $row->role == 'admin' ? 'bg-danger' : 'bg-info text-dark' }}">
+                                    <span class="badge px-3 py-2 rounded-pill 
+                                        {{ $row->role == 'admin' ? 'bg-danger' : 'bg-success' }}">
                                         {{ $row->role }}
                                     </span>
                                 </td>

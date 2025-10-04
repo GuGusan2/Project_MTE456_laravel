@@ -62,24 +62,27 @@
                     @endif
                 </div>
 
-                {{-- Start Date --}}
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Start Date</label>
-                    <input type="date" class="form-control" name="start_date" required
-                           value="{{ $start_date }}">
-                    @if(isset($errors) && $errors->has('start_date'))
-                        <div class="text-danger small mt-1">{{ $errors->first('start_date') }}</div>
-                    @endif
-                </div>
+                <div class="row">
+                    {{-- Start Date --}}
+                    <div class="mb-3 col-lg-6 col-md-6">
+                        <label class="form-label fw-bold">Start Date</label>
+                        <input type="date" class="form-control" name="start_date" required
+                               value="{{ $start_date }}">
+                        @if(isset($errors) && $errors->has('start_date'))
+                            <div class="text-danger small mt-1">{{ $errors->first('start_date') }}</div>
+                        @endif
+                    </div>
+    
+                    {{-- End Date --}}
+                    <div class="mb-3 col-lg-6 col-md-6">
+                        <label class="form-label fw-bold">End Date</label>
+                        <input type="date" class="form-control" name="end_date" required
+                               value="{{ $end_date }}">
+                        @if(isset($errors) && $errors->has('end_date'))
+                            <div class="text-danger small mt-1">{{ $errors->first('end_date') }}</div>
+                        @endif
+                    </div>
 
-                {{-- End Date --}}
-                <div class="mb-3">
-                    <label class="form-label fw-bold">End Date</label>
-                    <input type="date" class="form-control" name="end_date" required
-                           value="{{ $end_date }}">
-                    @if(isset($errors) && $errors->has('end_date'))
-                        <div class="text-danger small mt-1">{{ $errors->first('end_date') }}</div>
-                    @endif
                 </div>
 
                 {{-- Buttons --}}

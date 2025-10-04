@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Favorite;
+use App\Models\MenuModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,7 +11,7 @@ class FavoriteController extends Controller
 {
     // 📌 หน้าแสดงเมนูโปรด
     public function index()
-    {
+    {       
         $mem_id = Auth::guard('member')->user()->mem_id;
         $favorites = Favorite::with('menu')->where('mem_id', $mem_id)->get();
         return view('member.favorites', compact('favorites'));

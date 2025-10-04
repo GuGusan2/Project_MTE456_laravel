@@ -61,8 +61,28 @@ class DashboardController extends Controller
             $label = $dailyVisits->pluck('day');
             $data = $dailyVisits->pluck('total');
 
+            // 🔥 เมนูที่ถูกดูมากที่สุด 5 อันดับแรก
+            $topMenuViews = DB::table('tbl_count_view')
+                ->select('menu_id', DB::raw('COUNT(count_id) as total_views'))
+                ->whereNotNull('menu_id') // ✅ ตัด record ที่ menu_id เป็น NULL
+                ->groupBy('menu_id')
+                ->orderByDesc('total_views')
+                ->limit(5)
+                ->get();
 
-            return view('dashboard.index', compact('sumPrice', 'countMenu', 'countEmployee', 'countMember', 'countPromotion', 'countView', 'label', 'data'));
+            $topMenus = $topMenuViews->map(function ($item) {
+                $menu = MenuModel::find($item->menu_id);
+                return [
+                    'menu_name' => $menu ? $menu->menu_name : 'เมนูไม่พบ',
+                    'views' => $item->total_views
+                ];
+            });
+
+            $menuLabels = $topMenus->pluck('menu_name');
+            $menuViews = $topMenus->pluck('views');
+            
+
+            return view('dashboard.index', compact('sumPrice', 'countMenu', 'countEmployee', 'countMember', 'countPromotion', 'countView', 'label', 'data', 'menuLabels', 'menuViews'));
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500); //สำหรับ debug
             //  return view('errors.404');

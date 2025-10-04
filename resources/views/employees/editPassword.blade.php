@@ -28,18 +28,18 @@
                            placeholder="Employee Name" value="{{ $emp_name }}">
                 </div>
 
-                {{-- Username/Email --}}
+                {{-- Username --}}
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Email / Username</label>
-                    <input type="email" class="form-control" name="emp_username" disabled
-                           placeholder="Email" value="{{ $emp_username }}" minlength="4">
+                    <label class="form-label fw-bold">Username</label>
+                    <input type="text" class="form-control" name="emp_username" disabled
+                           placeholder="Username" value="{{ $emp_username }}" minlength="4">
                 </div>
 
                 {{-- New Password --}}
                 <div class="mb-3">
                     <label class="form-label fw-bold">New Password</label>
                     <input type="password" class="form-control" name="password" required
-                           placeholder="New Password (min. 3 characters)">
+                           placeholder="New Password at least 3 characters">
                     @if(isset($errors) && $errors->has('password'))
                         <div class="text-danger small mt-1">{{ $errors->first('password') }}</div>
                     @endif
@@ -49,7 +49,7 @@
                 <div class="mb-3">
                     <label class="form-label fw-bold">Confirm Password</label>
                     <input type="password" class="form-control" name="password_confirmation" required
-                           placeholder="Confirm Password (min. 3 characters)" minlength="3">
+                           placeholder="Confirm Password" minlength="3">
                     @if(isset($errors) && $errors->has('password_confirmation'))
                         <div class="text-danger small mt-1">{{ $errors->first('password_confirmation') }}</div>
                     @endif
@@ -57,10 +57,10 @@
 
                 {{-- Buttons --}}
                 <div class="text-end">
-                    <button type="submit" class="btn btn-primary me-2">
+                    <button type="submit" class="btn btn-primary ms-2 mb-2">
                         <i class="fa-solid fa-save me-1"></i> Update
                     </button>
-                    <a href="/employee" class="btn btn-danger">
+                    <a href="/employee" class="btn btn-danger ms-2 mb-2">
                         <i class="fa-solid fa-xmark me-1"></i> Cancel
                     </a>
                 </div>

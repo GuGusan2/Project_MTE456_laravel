@@ -16,7 +16,7 @@
             <div class="g-2 mb-3">
                 <form action="/menu/searchfilter" method="get">
                     <div class="row g-2 mb-3">
-                        <div class="col-md-3">
+                        <div class="col-md-3 col-lg-2 col-sm-12">
                             <select class="form-select" name="menu_type">
                                 <option class="text-center" value="">-- เลือกประเภทเมนู --</option>
                                 <option value="food" {{ request('menu_type') == 'food' ? 'selected' : '' }}>🍛 Food
@@ -27,14 +27,14 @@
                                 </option>
                             </select>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-5 col-lg-6 col-sm-12">
                             <input type="text" class="form-control me-2" name="search"
                                 placeholder="🔍 Search menu name..." value="{{ request('search') }}">
                         </div>
-                        <div class="col-md-1 d-grid">
+                        <div class="col-md-2 d-grid col-lg-2 col-sm-12">
                             <button class="btn btn-success" type="submit">Search</button>
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-2 col-lg-2 col-sm-12">
                             <a href="/menu" class="btn btn-secondary w-100">Reset</a>
                         </div>
                     </div>

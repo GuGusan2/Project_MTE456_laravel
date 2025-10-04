@@ -51,31 +51,35 @@
                         @endif
                     </div>
 
-                    {{-- Start Date --}}
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Start Date</label>
-                        <input type="date" class="form-control" name="start_date" required
-                            value="{{ old('start_date') }}">
-                        @if (isset($errors) && $errors->has('start_date'))
-                            <div class="text-danger small mt-1">{{ $errors->first('start_date') }}</div>
-                        @endif
+                    <div class="row">
+
+                        {{-- Start Date --}}
+                        <div class="mb-3 col-lg-6 col-md-6">
+                            <label class="form-label fw-bold">Start Date</label>
+                            <input type="date" class="form-control" name="start_date" required
+                                value="{{ old('start_date') }}">
+                            @if (isset($errors) && $errors->has('start_date'))
+                                <div class="text-danger small mt-1">{{ $errors->first('start_date') }}</div>
+                            @endif
+                        </div>
+    
+                        {{-- End Date --}}
+                        <div class="mb-3 col-lg-6 col-md-6">
+                            <label class="form-label fw-bold">End Date</label>
+                            <input type="date" class="form-control" name="end_date" required value="{{ old('end_date') }}">
+                            @if (isset($errors) && $errors->has('end_date'))
+                                <div class="text-danger small mt-1">{{ $errors->first('end_date') }}</div>
+                            @endif
+                        </div>
                     </div>
 
-                    {{-- End Date --}}
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">End Date</label>
-                        <input type="date" class="form-control" name="end_date" required value="{{ old('end_date') }}">
-                        @if (isset($errors) && $errors->has('end_date'))
-                            <div class="text-danger small mt-1">{{ $errors->first('end_date') }}</div>
-                        @endif
-                    </div>
 
                     {{-- Buttons --}}
                     <div class="text-end">
-                        <button type="submit" class="btn btn-primary me-2">
+                        <button type="submit" class="btn btn-primary ms-2 mb-2">
                             <i class="fa-solid fa-plus me-1"></i> Insert Promotion
                         </button>
-                        <a href="/promotion" class="btn btn-danger">
+                        <a href="/promotion" class="btn btn-danger ms-2 mb-2">
                             <i class="fa-solid fa-xmark me-1"></i> Cancel
                         </a>
                     </div>

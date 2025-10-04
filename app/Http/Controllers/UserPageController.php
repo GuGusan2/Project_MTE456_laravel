@@ -2,18 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CounterModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\MenuModel;
 use App\Models\PromotionModel;
+use Illuminate\Support\Facades\DB; //raw sql
 
 class UserPageController extends Controller
 {
     // 🏠 หน้า Home → แสดงเมนูแนะนำ (3 เมนู)
     public function home()
     {
+
+        DB::table('tbl_count_view')->insert([
+            ['timestamp' => now()]
+        ]);
+
         $menus = MenuModel::take(3)->get(); // ดึงมา 3 เมนูจาก DB
         $promotions = PromotionModel::orderBy('start_date', 'desc')->get();
-        return view('user.home', compact('menus','promotions'));
+        return view('user.home', compact('menus', 'promotions'));
     }
 
     // 🍽 หน้าเมนูทั้งหมด
@@ -47,6 +55,12 @@ class UserPageController extends Controller
     public function menudetail($id)
     {
         $menu = MenuModel::findOrFail($id); // ถ้าไม่เจอ → error 404
+
+        CounterModel::create([
+            'menu_id' => $id,
+            'timestamp' => Carbon::now()
+        ]);
+
         return view('user.menudetail', compact('menu'));
     }
 

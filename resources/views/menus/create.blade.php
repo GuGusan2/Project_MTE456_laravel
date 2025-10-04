@@ -94,10 +94,10 @@
 
                 {{-- Buttons --}}
                 <div class="text-end">
-                    <button type="submit" class="btn btn-success me-2">
+                    <button type="submit" class="btn btn-success ms-2 mb-2">
                         <i class="fa-solid fa-plus me-1"></i> Insert Menu
                     </button>
-                    <a href="/menu" class="btn btn-secondary">
+                    <a href="/menu" class="btn btn-secondary btn-cancle ms-2 mb-2">
                         <i class="fa-solid fa-xmark me-1"></i> Cancel
                     </a>
                 </div>

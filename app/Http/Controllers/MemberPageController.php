@@ -6,12 +6,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\MenuModel;
 use App\Models\PromotionModel;
+use Illuminate\Support\Facades\DB; //raw sql
+use App\Models\CounterModel;
+use Carbon\Carbon;
 
 class MemberPageController extends Controller
 {
     // 🏠 หน้า Home
     public function home()
     {
+
+        DB::table('tbl_count_view')->insert([
+            ['timestamp' => now()]
+        ]);
+
         $menus = MenuModel::orderBy('timestamp', 'desc')->take(3)->get(); // ⬅️ จาก 4 → 3
         $promotions = PromotionModel::orderBy('start_date', 'desc')->get();
 
@@ -74,6 +82,11 @@ class MemberPageController extends Controller
         }
 
         $menu = MenuModel::with(['reviews.member'])->findOrFail($id);
+
+        CounterModel::create([
+            'menu_id' => $id,
+            'timestamp' => Carbon::now()
+        ]);
 
         return view('member.menudetail', compact('menu'));
     }

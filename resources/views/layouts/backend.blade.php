@@ -14,23 +14,59 @@
             font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        body {
-            background-color: #e9e6de;
+        .btn-cancle:hover {
+            background: rgb(209, 41, 41);
+            border-color: transparent;
         }
 
-        /* Sidebar */
+        body {
+            background-color: #e9e6de;
+            margin: 0;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .dropdown-menu {
+            background: #fffaf5;
+            border-radius: 12px;
+            padding: 10px;
+        }
+
+        .dropdown-item {
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .dropdown-item:hover {
+            background: #ffe0e0;
+            border-radius: 8px;
+            transform: translateX(4px);
+        }
+
+
+        /* ===== Sidebar ===== */
         .sidebar {
-            height: 100vh;
+            width: 240px;
             background: linear-gradient(180deg, #6b2d1a, #a9442e);
-            color: #fff;
+            color: white;
+            height: 100vh;
             position: fixed;
             top: 0;
             left: 0;
-            width: 240px;
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            z-index: 999;
+            transition: transform 0.4s ease, opacity 0.4s ease;
         }
 
-        .sidebar h3 {
+        /* 🔸 เมื่อปิด Sidebar (ทั้ง Desktop และ Mobile) */
+        .sidebar.closed {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+
+        .sidebar h4 {
             padding: 20px;
             margin: 0;
             text-align: center;
@@ -46,6 +82,12 @@
             padding: 12px 20px;
             transition: 0.3s;
             font-size: 15px;
+            white-space: nowrap;
+        }
+
+        .sidebar .list-group-item i {
+            min-width: 25px;
+            text-align: center;
         }
 
         .sidebar .list-group-item:hover {
@@ -60,109 +102,204 @@
             border-radius: 10px;
         }
 
-        /* Main Content */
+        /* ===== Content ===== */
         .content {
             margin-left: 240px;
             padding: 20px;
+            transition: margin-left 0.4s ease;
+            flex: 1;
         }
 
-        .hold {
-            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
-            background: #faf8f4;
-            font-weight: bold;
-            border: 2px double rgb(157, 149, 149);
+        /* ปิด sidebar แล้ว content ชิดซ้าย */
+        .content.full {
+            margin-left: 0 !important;
         }
 
-        .holdlog:hover {
-            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
-            background: #ee8a8a;
-        }
-
-        .holdlog:hover a {
-            background: transparent;
-        }
-
-        .holdlog a {
-            background: transparent;
-        }
-
-        .hold:hover {
-            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
-            background: #cecccc;
-            border: 2px double transparent;
-        }
-
+        /* ===== Footer ===== */
         footer {
             margin-left: 240px;
             background: #f5f0eb;
             color: #3b1f1f;
+            padding: 10px;
+            text-align: center;
+            transition: margin-left 0.4s ease;
+        }
+
+        footer.full {
+            margin-left: 0 !important;
+        }
+
+        /* ===== Overlay (Mobile) ===== */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 998;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .overlay.show {
+            display: block;
+            opacity: 1;
+        }
+
+        /* ===== Hamburger ===== */
+        .menu-toggle {
+            position: fixed;
+            z-index: 1000;
+            cursor: pointer;
+            color: #6b2d1a;
+            background: #fff;
+            padding: 8px 12px;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s;
+        }
+
+        .menu-toggle:hover {
+            background: #f0f0f0;
+        }
+
+        /* Sticky Footer */
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        /* ===== Responsive (Mobile) ===== */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+                opacity: 1;
+            }
+
+            .content,
+            footer {
+                margin-left: 0 !important;
+            }
         }
     </style>
-    @yield('css_before')
 
+    @yield('css_before')
 </head>
 
 <body>
-
     <!-- Sidebar -->
-    <div class="sidebar">
-        <h3>Back Office</h3>
+    <div class="sidebar shadow-sm" id="sidebar">
         <div class="list-group list-group-flush">
-            <a href="/" class="list-group-item"><i class="fa-solid fa-house me-2"></i> HOME</a>
-            <a href="/dashboard" class="list-group-item"><i class="fa-solid fa-chart-line me-2"></i> Dashboard</a>
+            <div class="logo list-group-item"
+                style="background: #a1472b; box-shadow: 1px 2px 20px #5a2413; margin-bottom: 20px; padding-top: 55px;">
+                <img src="/images/logo.png" alt="logo" width="180" height="200">
+            </div>
+            <a href="/" class="list-group-item"><i class="fa-solid fa-house me-2"></i> <span>HOME</span></a>
+            <a href="/dashboard" class="list-group-item"><i class="fa-solid fa-chart-line me-2"></i>
+                <span>Dashboard</span></a>
             @if (session('role') === 'admin')
-                <a href="/employee" class="list-group-item">
-                    <i class="fa-solid fa-user-tie me-2"></i> Employee
-                </a>
+                <a href="/employee" class="list-group-item"><i class="fa-solid fa-user-tie me-2"></i>
+                    <span>Employee</span></a>
             @endif
-            <a href="/member" class="list-group-item"><i class="fa-solid fa-users me-2"></i> Member</a>
-            <a href="/menu" class="list-group-item"><i class="fa-solid fa-utensils me-2"></i> Menu</a>
-            <a href="/promotion" class="list-group-item"><i class="fa-solid fa-tags me-2"></i> Promotion</a>
+            <a href="/member" class="list-group-item"><i class="fa-solid fa-users me-2"></i> <span>Member</span></a>
+            <a href="/menu" class="list-group-item"><i class="fa-solid fa-utensils me-2"></i> <span>Menu</span></a>
+            <a href="/promotion" class="list-group-item"><i class="fa-solid fa-tags me-2"></i>
+                <span>Promotion</span></a>
         </div>
     </div>
 
+    <!-- Overlay for Mobile -->
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
     <!-- Main Content -->
-    <div class="content">
-        <!-- Top-right User Dropdown -->
-        <div class="d-flex justify-content-end mb-3">
-            <div class="dropdown">
-                <a class="hold d-flex align-items-center rounded px-3 py-2 shadow-sm text-decoration-none dropdown-toggle"
+    <div class="content" id="content">
+        <div class="d-flex row justify-content-end mb-3">
+            <div class="col-auto row me-auto">
+                <div class="col-auto">
+                    <!-- Hamburger -->
+                    <span class="menu-toggle" onclick="toggleSidebar()">
+                        <i class="fa-solid fa-bars fa-lg"></i>
+                    </span>
+                </div>
+                <div class="col-auto ms-4">
+                    <h4 class="text-secondary mt-1">
+                        Back Office
+                    </h4>
+                </div>
+            </div>
+
+            <!-- Profile Dropdown -->
+            <div style="box-shadow: 1px 2px 5px #746565; background: #eeebeb;" class="col-auto dropdown">
+                <a class="d-flex align-items-center rounded px-3 py-2 shadow-sm text-decoration-none dropdown-toggle"
                     href="#" role="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="{{ asset('storage/' . session('emp_pic')) }}" alt="Profile" class="rounded-circle me-2"
                         style="width:35px; height:35px; object-fit:cover;">
                     <span>{{ session('emp_name') }}</span>
                 </a>
 
-                <ul class="holdlog dropdown-menu dropdown-menu-start w-100" aria-labelledby="profileDropdown">
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                     <li>
-                        <a class="dropdown-item" href="#"
+                        <a class="dropdown-item text-danger" href="#"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            Logout
+                            🚪 ออกจากระบบ
                         </a>
                     </li>
                 </ul>
             </div>
 
-            <!-- Hidden Logout Form -->
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
                 @csrf
             </form>
         </div>
 
-
-        @yield('content')
+        <main class="py-4 container">
+            @yield('content')
+        </main>
     </div>
+
+    <!-- Footer -->
+    <footer id="footer" class="pt-3 pb-2 shadow-lg text-center">
+        <p>© 2025 by Chanidapha & Weerawat</p>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>
 
-
-    <!-- Footer -->
-    <footer class="pt-3 pb-2 shadow-lg text-center">
-        <p>© 2025 by Chanidapha & Weerawat</p>
-    </footer>
-    @yield('footer')
-
+    <!-- Sidebar Toggle -->
     <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            const overlay = document.getElementById("overlay");
+            const content = document.getElementById("content");
+            const footer = document.getElementById("footer");
+
+            if (window.innerWidth <= 768) {
+                // 📱 Mobile
+                sidebar.classList.toggle("open");
+                overlay.classList.toggle("show");
+            } else {
+                // 💻 Desktop
+                sidebar.classList.toggle("closed");
+                content.classList.toggle("full");
+                footer.classList.toggle("full");
+            }
+        }
+
+        // Highlight active link
         document.addEventListener("DOMContentLoaded", function() {
             let links = document.querySelectorAll(".list-group-item");
             links.forEach(link => {
@@ -172,8 +309,9 @@
             });
         });
     </script>
-    @yield('js_before')
 
+    @yield('footer')
+    @yield('js_before')
     @include('sweetalert::alert')
 </body>
 
