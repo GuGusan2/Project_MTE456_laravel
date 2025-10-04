@@ -314,7 +314,7 @@ class MemberController extends Controller
                 'mem_password' => bcrypt($request->input('password')),
             ]);
             // แสดง Alert ก่อน return
-            Alert::success('แก้ไขข้อมูลสำเร็จ');
+            Alert::success('เปลี่ยนรหัสผ่านสำเร็จ');
             return redirect('/member');
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500); //สำหรับ debug
