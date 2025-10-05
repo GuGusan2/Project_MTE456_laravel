@@ -189,36 +189,35 @@ class MemberProfileController extends Controller
 
     // 📌 ลบบัญชี
     public function deleteAccount(Request $request)
-    {
-        $request->validate([
-            'password' => 'required'
-        ]);
+{
+    $request->validate([
+        'password' => 'required'
+    ]);
 
-        $member = Auth::guard('member')->user();
+    $member = Auth::guard('member')->user();
 
-        // ตรวจสอบรหัสผ่าน
-        if (!Hash::check($request->password, $member->mem_password)) {
-            Alert::error('รหัสผ่านไม่ถูกต้อง ❌');
-
-            return back();
-        }
-
-        // ออกจากระบบ
-        Auth::guard('member')->logout();
-
-        if ($request->hasFile('mem_pic')) {
-            // ถ้ามีรูปเดิมให้ลบไฟล์รูปเก่าออกจาก storage
-            if ($member->mem_pic) {
-                Storage::disk('public')->delete($member->mem_pic);
-            }
-        }
-
-        // ลบข้อมูลใน DB
-        $member->delete();
-
-        // ✅ กลับไปหน้าแรกของ user
-        Alert::success('บัญชีของคุณถูกลบเรียบร้อย');
-
-        return redirect('/');
+    // ✅ ตรวจสอบรหัสผ่าน
+    if (!Hash::check($request->password, $member->mem_password)) {
+        Alert::error('รหัสผ่านไม่ถูกต้อง ❌');
+        return back();
     }
+
+    // ✅ ลบรูปภาพจาก storage ถ้ามี
+    if ($member->mem_pic) {
+        Storage::disk('public')->delete($member->mem_pic);
+    }
+
+    // ✅ ลบข้อมูลในฐานข้อมูล
+    $member->delete();
+
+    // ✅ ออกจากระบบและล้าง session ทั้งหมด
+    Auth::guard('member')->logout();
+    session()->invalidate();
+    session()->regenerateToken();
+
+    // ✅ แจ้งเตือนและกลับไปหน้าแรก
+    Alert::success('บัญชีของคุณถูกลบเรียบร้อยแล้ว 🎉');
+    return redirect()->route('user.home');
+}
+
 }
