@@ -93,7 +93,7 @@ class MemberController extends Controller
         }
 
 
-        //ถ้ามีการอัพโหลดไฟล์เข้ามา ให้อัพโหลดไปเก็บยังโฟลเดอร์ uploads/student
+        //ถ้ามีการอัพโหลดไฟล์เข้ามา ให้อัพโหลดไปเก็บยังโฟลเดอร์ uploads/member
         try {
             $imagePath = null;
             if ($request->hasFile('mem_pic')) {

@@ -1,18 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MenuController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PromotionController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MemberAuthController;
 
 use App\Http\Controllers\DashboardController;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
-
 use App\Http\Controllers\UserPageController;
 
 use App\Http\Controllers\MemberPageController;  
@@ -86,16 +81,7 @@ Route::prefix('user')->group(function () {
     Route::get('/menu/{id}', [UserPageController::class, 'menudetail'])->name('user.menudetail');
 });
 
-//home page
-// ❌ เดิม: Route::get('/', [HomeController::class,'index']);
-// ✅ แก้: ให้หน้าแรกไปที่ UserPageController@home
-Route::get('/', [UserPageController::class, 'home'])->name('user.home');   // ⭐ ตรงนี้แก้ให้เรียก UserPageController
-
-//authentication
-
-//ทำไมต้องมี name('login') ?
-//เวลาใช้ auth middleware ถ้า user ยังไม่ login → Laravel จะ redirect ไปหา route ที่ชื่อว่า login โดยอัตโนมัติ
-//ถ้าไม่เจอ → มันก็โยน error Route [login] not defined.
+Route::get('/', [UserPageController::class, 'home'])->name('user.home');  
 
 //login เสร็จไปหน้า Dashboard
 Route::middleware('auth:admin')->group(function () {

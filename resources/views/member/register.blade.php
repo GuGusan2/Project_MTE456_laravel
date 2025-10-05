@@ -58,7 +58,7 @@
                 <label for="mem_phone">เบอร์โทรศัพท์</label>
                 <input type="tel" id="mem_phone" name="mem_phone" 
                        class="form-control @error('mem_phone') is-invalid @enderror" 
-                       value="{{ old('mem_phone') }}"  maxlength="10" placeholder="เบอร์โทรศัพท์ 10 หลัก">
+                       value="{{ old('mem_phone') }}"  maxlength="10" placeholder="เบอร์โทรศัพท์ 10 หลัก" required>
                 @error('mem_phone')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -67,7 +67,7 @@
             {{-- Gender --}}
             <div class="mb-3">
                 <label for="mem_gender">เพศ</label>
-                <select id="mem_gender" name="mem_gender" 
+                <select required id="mem_gender" name="mem_gender" 
                         class="form-control @error('mem_gender') is-invalid @enderror">
                     <option value="">-- เลือกเพศ --</option>
                     <option value="male" {{ old('mem_gender') == 'male' ? 'selected' : '' }}>ชาย</option>
@@ -82,7 +82,7 @@
             {{-- Date of Birth --}}
             <div class="mb-3">
                 <label for="mem_dob">วันเกิด</label>
-                <input type="date" id="mem_dob" name="mem_dob" 
+                <input type="date" required id="mem_dob" name="mem_dob" 
                        class="form-control @error('mem_dob') is-invalid @enderror"
                        value="{{ old('mem_dob') }}">
                 @error('mem_dob')
@@ -111,7 +111,7 @@
             {{-- Profile Picture --}}
             <div class="mb-3">
                 <label for="mem_pic">รูปโปรไฟล์</label>
-                <input type="file" id="mem_pic" name="mem_pic" class="form-control">
+                <input required type="file" id="mem_pic" name="mem_pic" class="form-control">
                 <small class="text-muted">ถ้าไม่เลือก จะใช้ default.png</small>
             </div>
 
