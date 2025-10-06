@@ -10,15 +10,18 @@
     <div class="card shadow-sm mb-4">
         <div class="card-body row">
             <form action="/searchMember" method="get" class="row" role="search">
-                <div class="col-md-10 d-grid">
+                <div class="col-md-8 my-2">
                     <input type="text" 
                            name="keyword" 
                            class="form-control" 
                            placeholder="🔍 Search Member Name" 
                            value="{{ $keyword ?? '' }}" required>
                 </div>
-                <div class="col-md-2 d-grid">
+                <div class="col-md-2 my-2 d-grid">
                    <button class="btn btn-success" type="submit">Search</button>
+                </div>        
+                <div class="col-md-2 d-grid my-2">
+                   <a href="/member" class="btn btn-secondary">Reset</a>
                 </div>        
             </form>
         </div>

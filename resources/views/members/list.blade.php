@@ -21,7 +21,7 @@
                    <button class="btn btn-success" type="submit">Search</button>
                 </div>        
                 <div class="col-md-2 d-grid my-2">
-                   <a class="btn btn-secondary">Reset</a>
+                   <a href="/member" class="btn btn-secondary">Reset</a>
                 </div>        
             </form>
         </div>
